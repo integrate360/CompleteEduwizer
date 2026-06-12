@@ -18,6 +18,7 @@ import ContactListing from "./components/listings/ContactListing";
 import PaymentListing from "./components/listings/PaymentListing";
 import ConfirmModal from "./layouts/ConfirmModal";
 import FeaturedListing from "./components/dashboard/FeaturedListing";
+import SeoManagement from "./components/seo/SeoManagement";
 import AdministratorsListing from "./components/dashboard/AdministratorsListing";
 import ChancellorsListing from "./components/dashboard/ChancellorsListing";
 import AwardsListing from "./components/dashboard/AwardsListing";
@@ -415,6 +416,7 @@ export default function App() {
           <Route path="/events-listing" element={<EventsListing />} />
           <Route path="/payment-listing" element={<PaymentListing />} />
           <Route path="/featured-listing" element={<FeaturedListing />} />
+          <Route path="/seo-manager" element={<SeoManagement />} />
           <Route
             path="/administrators-listing"
             element={<AdministratorsListing />}

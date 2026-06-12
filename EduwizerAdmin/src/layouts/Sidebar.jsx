@@ -290,6 +290,25 @@ const NAV_ITEMS = [
       </svg>
     ),
   },
+  {
+    id: "seo-manager",
+    label: "SEO Manager",
+    path: "/seo-manager",
+    icon: (
+      <svg
+        className="w-4.5 h-4.5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.3-4.3" />
+      </svg>
+    ),
+  },
 ];
 
 const ChevRight = () => (

@@ -227,3 +227,20 @@ export function updatePackage(id, body) {
 export function deletePackage(id) {
   return apiClient.delete(`/deletepackage/${id}`);
 }
+
+// SEO
+export function getSeoSettings() {
+  return apiClient.get("/admin/eduwizer/seo");
+}
+export function getBlogsForSeo() {
+  return apiClient.get("/admin/eduwizer/getBlogs");
+}
+export function getEventsForSeo() {
+  return apiClient.get("/admin/eduwizer/getEvents");
+}
+export function saveSeo(body) {
+  return apiClient.post("/admin/eduwizer/seo", body);
+}
+export function deleteSeo(pageKey) {
+  return apiClient.delete(`/admin/eduwizer/seo/${encodeURIComponent(pageKey)}`);
+}
