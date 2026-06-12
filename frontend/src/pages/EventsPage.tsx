@@ -89,6 +89,7 @@ export default function EventsPage() {
         title="Events & Blogs"
         description="Stay updated with the latest education events, industry insights and expert articles from NG Eduwizer — workshops, seminars, expos and leadership blogs for educators."
         path="/events-blogs"
+        pageKey="events-blogs"
       />
       <section className="hero">
         <div className="page-wrap hero__inner">

@@ -86,6 +86,7 @@ export default function DetailPage({ kind }: { kind: 'event' | 'blog' }) {
         title={item.title}
         description={metaDescription}
         path={seoPath}
+        pageKey={`${kind}:${id}`}
         type="article"
         image={item.image || undefined}
         jsonLd={jsonLd}

@@ -273,6 +273,18 @@ export function getBlogById(id: string) {
 
 /* ---------------- forms ---------------- */
 
+export interface SeoOverride {
+  title?: string
+  description?: string
+  ogImage?: string
+  keywords?: string
+}
+
+/** Admin-managed SEO overrides keyed by pageKey ("home", "blog:<id>", …). */
+export function getSeoOverrides() {
+  return request<Record<string, SeoOverride>>('/admin/eduwizer/seo')
+}
+
 export function subscribe(email: string) {
   return request('/eduwizer/susbcribe', { body: { email } })
 }

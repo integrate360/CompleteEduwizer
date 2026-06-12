@@ -15,6 +15,7 @@ export default function AboutPage() {
         title="About Us"
         description="NG Eduwizer Pvt Ltd is a Mumbai-based multinational education recruitment company spanning India, Dubai, Canada, Singapore and Europe. Meet our leadership, brand ambassadors and CEO Dr. Nikkie Grover."
         path="/about-us"
+        pageKey="about-us"
       />
       <section className="about-hero">
         <div className="page-wrap about-hero__inner">

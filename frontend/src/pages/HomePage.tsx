@@ -94,6 +94,7 @@ export default function HomePage() {
         title="The First Comprehensive Educator's Database Portal"
         description="NG Eduwizer connects talented educators with leading institutions worldwide — recruitment, career counselling, school infrastructure services and education insights across India, Dubai, Canada, Singapore & Europe."
         path="/home"
+        pageKey="home"
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'Organization',

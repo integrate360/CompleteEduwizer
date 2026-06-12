@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async'
+import { useSeoOverride } from '../seo/SeoContext'
 
 const SITE_NAME = 'NG Eduwizer'
 const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined) ?? 'https://eduwizer.com'
@@ -16,6 +17,8 @@ export interface SeoProps {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[]
   /** Set true on auth/search pages we don't want indexed. */
   noIndex?: boolean
+  /** Admin-override key ("home", "about-us", "blog:<id>", "event:<id>"). */
+  pageKey?: string
 }
 
 /**
@@ -30,15 +33,22 @@ export default function Seo({
   type = 'website',
   jsonLd,
   noIndex = false,
+  pageKey,
 }: SeoProps) {
-  const fullTitle = `${title} | ${SITE_NAME}`
+  // Admin overrides (if set) win over the page's built-in defaults.
+  const override = useSeoOverride(pageKey)
+  const finalTitle = override?.title || title
+  const finalDescription = override?.description || description
+  const finalImage = override?.ogImage || image
+
+  const fullTitle = `${finalTitle} | ${SITE_NAME}`
   const canonical = `${SITE_URL}${path}`
   const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
 
   return (
     <Helmet>
       <title>{fullTitle}</title>
-      <meta name="description" content={description} />
+      <meta name="description" content={finalDescription} />
       <link rel="canonical" href={canonical} />
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
@@ -46,15 +56,15 @@ export default function Seo({
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:type" content={type} />
       <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
+      <meta property="og:description" content={finalDescription} />
       <meta property="og:url" content={canonical} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={finalImage} />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:description" content={finalDescription} />
+      <meta name="twitter:image" content={finalImage} />
 
       {blocks.map((block, i) => (
         <script key={i} type="application/ld+json">

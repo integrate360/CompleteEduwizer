@@ -63,6 +63,7 @@ export default function ContactPage() {
         title="Contact Us"
         description="Get in touch with NG Eduwizer. Visit our Bandra Kurla Complex office in Mumbai, call +91 91677 80061, or send us a message — we reply within 24 hours."
         path="/contact-us"
+        pageKey="contact-us"
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'ContactPage',
