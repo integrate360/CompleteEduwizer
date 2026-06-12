@@ -2,6 +2,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useSelector, useDispatch } from "react-redux";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
+/* legacy global styles still used by search/package/OTP screens */
+import "./Components/PreLogin/Dashboard.css";
+import "./Components/About-Us/index.css";
+import "./Components/Contact-Us/index.css";
 import AboutUs from "./Components/About-Us";
 import ContactUs from "./Components/Contact-Us";
 import UserDashboard from "./Components/Dashboard/Dashboard";

@@ -1,0 +1,130 @@
+/* Contact Us — Al Sadat reference layout, Eduwizer branding */
+
+.ew-contact { background: #fafbff; }
+
+.ew-contact-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+}
+
+.ew-contact-form-card {
+  padding: 44px 48px;
+}
+.ew-contact-form-card h1 {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--ew-navy);
+  margin: 0 0 10px;
+}
+.ew-contact-sub {
+  font-size: 14px;
+  color: var(--ew-body);
+  margin: 0 0 30px;
+  line-height: 1.7;
+}
+.ew-contact-form-card form { display: flex; flex-direction: column; gap: 20px; }
+.ew-contact-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.ew-contact-form-card .ew-btn { align-self: flex-start; }
+
+/* office card */
+.ew-contact-office {
+  background: var(--ew-cream);
+  border-radius: var(--ew-radius);
+  box-shadow: var(--ew-shadow-card);
+  padding: 44px 40px;
+}
+.ew-contact-office h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ew-navy);
+  margin: 0 0 10px;
+}
+
+.ew-office-item {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+.ew-office-item:last-child { margin-bottom: 0; }
+
+.ew-office-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ew-navy);
+  box-shadow: var(--ew-shadow-card);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.ew-office-head {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ew-ink);
+  margin-bottom: 4px;
+}
+.ew-office-item p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--ew-body);
+  line-height: 1.7;
+}
+.ew-office-item a { color: var(--ew-navy); font-weight: 500; text-decoration: none; }
+.ew-office-item a:hover { text-decoration: underline; }
+
+/* map */
+.ew-contact-map-section { position: relative; height: 460px; }
+.ew-contact-map-section iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+.ew-contact-map-card {
+  position: absolute;
+  top: 50%;
+  left: 7%;
+  transform: translateY(-50%);
+  max-width: 360px;
+  padding: 34px 32px;
+}
+.ew-contact-map-card h2 {
+  font-size: 25px;
+  font-weight: 700;
+  color: var(--ew-navy);
+  margin: 0 0 12px;
+}
+.ew-contact-map-card p {
+  font-size: 14px;
+  color: var(--ew-body);
+  line-height: 1.7;
+  margin: 0 0 20px;
+}
+
+@media (max-width: 991px) {
+  .ew-contact-grid { grid-template-columns: 1fr; }
+  .ew-contact-form-card { padding: 34px 28px; }
+  .ew-contact-office { padding: 34px 28px; }
+}
+
+@media (max-width: 575px) {
+  .ew-contact-form-row { grid-template-columns: 1fr; }
+  .ew-contact-form-card .ew-btn { align-self: stretch; }
+  .ew-contact-map-section { height: auto; }
+  .ew-contact-map-section iframe { height: 300px; }
+  .ew-contact-map-card {
+    position: static;
+    transform: none;
+    max-width: none;
+    margin: -40px 16px 24px;
+  }
+}

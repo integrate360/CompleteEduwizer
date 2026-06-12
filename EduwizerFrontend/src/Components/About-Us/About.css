@@ -1,0 +1,117 @@
+/* About page — EduwizerFigma/About.png */
+
+.ew-about-hero { background: var(--ew-cream); }
+
+.ew-about-hero-grid {
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.ew-about-media { position: relative; }
+.ew-about-media img {
+  width: 100%;
+  border-radius: var(--ew-radius);
+  box-shadow: var(--ew-shadow-card);
+  display: block;
+}
+.ew-media-tag {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--ew-ink);
+  box-shadow: var(--ew-shadow-card);
+}
+.ew-media-tag span:first-child { font-weight: 700; }
+
+.ew-about-kicker {
+  font-size: 22px;
+  color: var(--ew-navy);
+  margin: 0 0 4px;
+  font-weight: 500;
+}
+.ew-about-hero-text h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--ew-heading);
+  margin: 0 0 18px;
+}
+.ew-about-lede {
+  font-size: 21px;
+  color: var(--ew-ink);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* company + ceo */
+.ew-about-company { background: #fff; }
+.ew-about-ceo { background: var(--ew-lavender); }
+
+.ew-about-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 480px;
+  gap: 56px;
+  align-items: center;
+}
+.ew-about-grid--ceo { grid-template-columns: 420px 1.3fr; }
+
+.ew-about-copy p {
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: var(--ew-body);
+  margin: 0 0 18px;
+}
+.ew-about-copy p:last-child { margin-bottom: 0; }
+
+.ew-about-foot-copy {
+  margin: 44px auto 0;
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: var(--ew-body);
+}
+
+/* get involved */
+.ew-about-involved { background: #fff; }
+.ew-about-involved h2 {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--ew-heading);
+  margin: 0 0 14px;
+}
+.ew-about-involved h2.mt-block { margin-top: 64px; }
+.ew-about-involved p {
+  font-size: 15px;
+  color: var(--ew-body);
+  max-width: 640px;
+  margin: 0 auto 24px;
+  line-height: 1.7;
+}
+
+@media (max-width: 991px) {
+  .ew-about-hero-grid,
+  .ew-about-grid,
+  .ew-about-grid--ceo {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .ew-about-media { max-width: 520px; margin: 0 auto; width: 100%; }
+  .ew-about-hero-text h1 { font-size: 38px; }
+  /* show image first on mobile for company section */
+  .ew-about-grid .ew-about-media { order: -1; }
+}
+
+@media (max-width: 575px) {
+  .ew-about-hero-text h1 { font-size: 30px; }
+  .ew-about-kicker { font-size: 18px; }
+  .ew-about-lede { font-size: 16.5px; }
+  .ew-about-involved h2 { font-size: 24px; }
+  .ew-about-involved h2.mt-block { margin-top: 44px; }
+}

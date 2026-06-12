@@ -1,107 +1,82 @@
-.subscribe {
-  -webkit-align-items: center;
-  -ms-flex-align: center;
+/* Newsletter band — EduwizerFigma/Footer.png (top section) */
+
+.ew-newsletter-wrap {
+  background: #fff;
+  padding: 48px 24px;
+}
+
+.ew-newsletter {
+  max-width: var(--ew-container);
+  margin: 0 auto;
+  background: var(--ew-grad-dark);
+  border-radius: var(--ew-radius-lg);
+  padding: 56px 64px;
+  display: flex;
   align-items: center;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  font-size: 2.5rem;
-  gap: 2rem;
-}
-
-.subscribe-head {
-  font-weight: bold;
-  text-align: center;
-}
-
-.subscribe-content {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 0;
-  padding: 0.5rem 1rem;
-  width: 50%;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
   justify-content: space-between;
+  gap: 36px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
 }
 
-.subscribe-content-mobile {
-  display: block !important;
-  width: 80% !important;
-}
-.subscribe-content .m-input + .title {
-  padding: 0.5rem 5rem !important;
-}
-
-.subscribe-with-bg {
-  height: 35rem;
-  background-image: url("../../../public/assets/images/png/subscribe.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: left;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-.subscribe-with-bg .subscribe {
-  gap: 3rem;
-}
-.subscribe-with-bg .subscribe h1 {
-  font-weight: 600;
-}
-.subscribe-with-bg .subscribe h3 {
-  font-weight: lighter;
-  text-align: center;
-}
-.subscribe-with-bg .subscribe .subscribe-content {
-  background-color: white;
-  margin-top: 2rem;
+.ew-newsletter-text h2 {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  max-width: 420px;
+  line-height: 1.25;
 }
 
-@media screen and (max-width: 768px) {
-  .subscribe-with-bg {
-    height: auto;
-    min-height: 400px;
-    padding: 3rem 1rem;
-    background-position: center bottom;
-    background-size: 60%;
+.ew-newsletter-text p {
+  margin: 0;
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.62);
+  max-width: 420px;
+}
+
+.ew-newsletter-form {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  padding: 6px 6px 6px 22px;
+  gap: 10px;
+  flex: 1;
+  max-width: 520px;
+}
+
+.ew-newsletter-form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: var(--ew-font);
+  font-size: 14.5px;
+  min-width: 0;
+}
+.ew-newsletter-form input::placeholder { color: rgba(255, 255, 255, 0.55); }
+
+@media (max-width: 991px) {
+  .ew-newsletter {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 36px;
   }
+  .ew-newsletter-form { width: 100%; max-width: none; }
+}
 
-  .subscribe-with-bg .subscribe {
-    gap: 1.5rem;
+@media (max-width: 575px) {
+  .ew-newsletter-wrap { padding: 32px 16px; }
+  .ew-newsletter { padding: 30px 22px; border-radius: 18px; }
+  .ew-newsletter-text h2 { font-size: 23px; }
+  .ew-newsletter-form {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 18px;
+    padding: 14px;
   }
-
-  .subscribe-head {
-    font-size: 2rem;
-  }
-
-  .subscribe-with-bg .subscribe h3 {
-    font-size: 1.2rem !important;
-    padding: 0 1rem;
-    line-height: 1.4;
-  }
-
-  .subscribe-content-mobile {
-    width: 90% !important;
-    padding: 1.5rem !important;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    margin-top: 1rem !important;
-  }
-
-  .subscribe-content-mobile .m-input {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    border: 1px solid #ddd !important;
-    padding: 12px !important;
-    border-radius: 10px !important;
-    width: 100% !important;
-    background-color: #fafafa !important;
-    display: block;
-  }
+  .ew-newsletter-form input { padding: 8px 4px; }
 }

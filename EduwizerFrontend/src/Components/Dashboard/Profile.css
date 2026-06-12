@@ -1,0 +1,93 @@
+/* Edit Profile — design-language reskin over existing form (EduwizerFigma/Profile.png)
+   CSS-only restyle: the form logic/structure is untouched. */
+
+.ew-profile {
+  background:
+    radial-gradient(900px 420px at 8% 0%, #e9edfb 0%, transparent 60%),
+    var(--ew-lavender);
+  margin: 0 !important;
+  padding: 36px 28px 64px;
+}
+
+.ew-profile-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ew-navy);
+  margin: 0 0 26px;
+  padding-left: 24px;
+}
+
+/* sidebar avatar card — replaces the heavy black border style */
+.ew-profile .border-custom {
+  border: none !important;
+  box-shadow: var(--ew-shadow-card) !important;
+  border-radius: var(--ew-radius) !important;
+  background: #fff;
+  padding: 26px 16px !important;
+}
+
+.ew-profile .border-custom img.rounded-circle {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  box-shadow: 0 6px 18px rgba(21, 34, 61, 0.18);
+}
+
+/* form panel */
+.ew-profile > .col-md-9.row,
+.ew-profile .col-md-9 {
+  background: transparent;
+}
+.ew-profile .col-md-9 > .col-12 {
+  background: #fff;
+  border-radius: var(--ew-radius);
+  box-shadow: var(--ew-shadow-card);
+  padding: 30px 28px;
+}
+
+/* section labels (Generals / Documents / etc.) */
+.ew-profile .font-weight-bold {
+  color: var(--ew-navy);
+  font-weight: 700 !important;
+}
+
+/* bootstrap warning buttons → design yellow pills */
+.ew-profile .btn-warning {
+  background: var(--ew-yellow) !important;
+  border: none !important;
+  border-radius: 999px !important;
+  color: #151b40 !important;
+  font-weight: 600 !important;
+  font-family: var(--ew-font) !important;
+  padding: 10px 26px !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.ew-profile .btn-warning:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--ew-shadow-card);
+}
+
+/* MUI inputs: align with ew inputs */
+.ew-profile .MuiInputBase-formControl {
+  border-radius: 10px !important;
+  background: #fff !important;
+  font-family: var(--ew-font) !important;
+}
+.ew-profile .MuiInputLabel-root {
+  font-family: var(--ew-font) !important;
+  font-size: 14px;
+}
+.ew-profile .MuiOutlinedInput-notchedOutline {
+  border-color: var(--ew-input-border) !important;
+}
+.ew-profile .Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--ew-navy-deep) !important;
+}
+
+/* visibility switches keep brand yellow (already themed globally) */
+
+@media (max-width: 767px) {
+  .ew-profile { padding: 24px 12px 48px; }
+  .ew-profile-title { padding-left: 12px; font-size: 23px; }
+  .ew-profile .col-md-9 > .col-12 { padding: 20px 14px; }
+}

@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import "./index.scss";
+import "./theme.css";
 import { persistor, store } from "./Redux";
 import reportWebVitals from "./reportWebVitals";
 

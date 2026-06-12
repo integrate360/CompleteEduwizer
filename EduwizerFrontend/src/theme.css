@@ -1,0 +1,277 @@
+/* ============================================================
+   Eduwizer Design System — extracted from EduwizerFigma PNGs
+   Shared tokens + reusable ew-* primitives used by every page.
+   ============================================================ */
+
+:root {
+  /* Brand */
+  --ew-navy: #1c115d;          /* nav links, headings accents */
+  --ew-navy-deep: #021855;     /* primary solid buttons (Login/Save) */
+  --ew-heading: #2b2367;       /* section titles */
+  --ew-ink: #15223d;           /* body headings on light bg */
+  --ew-body: #4b5563;          /* paragraph text */
+  --ew-muted: #8a91a5;
+
+  --ew-yellow: #fcd34d;        /* CTA fill */
+  --ew-yellow-soft: #eed165;   /* header pills */
+  --ew-brown: #2d1801;         /* Setup Of School pill */
+
+  /* Dark gradient surfaces (hero / newsletter / CTA bands) */
+  --ew-grad-dark: linear-gradient(110deg, #562e48 0%, #2b2545 32%, #1a243f 55%, #1c1230 82%, #241032 100%);
+
+  --ew-cream: #fefaee;         /* warm section bg */
+  --ew-lavender: #f5f6fd;      /* auth/profile page bg */
+  --ew-card: #ffffff;
+
+  --ew-border: #e5e7f0;
+  --ew-input-border: #d9dcea;
+
+  --ew-radius-sm: 8px;
+  --ew-radius: 14px;
+  --ew-radius-lg: 24px;
+
+  --ew-shadow-card: 0 10px 30px rgba(21, 34, 61, 0.08);
+  --ew-shadow-pop: 0 16px 40px rgba(21, 34, 61, 0.14);
+
+  --ew-container: 1240px;
+  --ew-font: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  font-family: var(--ew-font);
+  color: var(--ew-ink);
+}
+
+/* ---------- layout ---------- */
+.ew-container {
+  width: 100%;
+  max-width: var(--ew-container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ew-section { padding: 72px 0; }
+
+.ew-section-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ew-heading);
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+/* left-aligned section titles (Events page) */
+.ew-section-title--left {
+  text-align: left;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 32px;
+  color: var(--ew-ink);
+}
+
+/* ---------- buttons ---------- */
+.ew-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--ew-font);
+  font-weight: 600;
+  font-size: 16px;
+  padding: 13px 30px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ew-btn:hover { transform: translateY(-1px); box-shadow: var(--ew-shadow-card); }
+.ew-btn:active { transform: translateY(0); }
+
+.ew-btn--yellow { background: var(--ew-yellow); color: #151b40; }
+.ew-btn--yellow:hover { background: #f7c93c; color: #151b40; }
+
+.ew-btn--outline {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+}
+.ew-btn--outline:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,0.06); }
+
+.ew-btn--outline-dark {
+  background: transparent;
+  color: var(--ew-ink);
+  border: 1.5px solid var(--ew-ink);
+}
+.ew-btn--outline-yellow {
+  background: transparent;
+  color: var(--ew-ink);
+  border: 1.5px solid var(--ew-yellow);
+}
+.ew-btn--outline-yellow:hover { background: var(--ew-yellow); color: #151b40; }
+
+.ew-btn--navy { background: var(--ew-navy-deep); color: #fff; }
+.ew-btn--navy:hover { background: #0a2a75; color: #fff; }
+
+.ew-btn--brown { background: var(--ew-brown); color: var(--ew-yellow); }
+.ew-btn--brown:hover { background: #43270a; color: var(--ew-yellow); }
+
+.ew-btn--sm { padding: 9px 22px; font-size: 14px; }
+.ew-btn--block { width: 100%; }
+
+/* ---------- form fields ---------- */
+.ew-field { display: flex; flex-direction: column; gap: 7px; }
+
+.ew-label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ew-ink);
+}
+.ew-label .req { color: #e0492c; }
+.ew-label .opt { color: var(--ew-muted); font-weight: 400; }
+
+.ew-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--ew-input-border);
+  border-radius: var(--ew-radius-sm);
+  padding: 0 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.ew-input-wrap:focus-within {
+  border-color: var(--ew-navy-deep);
+  box-shadow: 0 0 0 3px rgba(2, 24, 85, 0.08);
+}
+.ew-input-wrap .ew-field-icon { color: var(--ew-muted); flex-shrink: 0; display: flex; }
+
+.ew-input,
+.ew-select,
+.ew-textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--ew-font);
+  font-size: 14.5px;
+  color: var(--ew-ink);
+  padding: 13px 0;
+}
+.ew-input::placeholder, .ew-textarea::placeholder { color: #a6abc0; }
+
+.ew-textarea { resize: vertical; min-height: 110px; padding: 13px 0; }
+
+.ew-select { appearance: none; cursor: pointer; }
+.ew-select-wrap { position: relative; }
+.ew-select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 1.6px solid var(--ew-muted);
+  border-bottom: 1.6px solid var(--ew-muted);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+.ew-eye {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ew-muted);
+  display: flex;
+  padding: 4px;
+}
+
+.ew-error { color: #e0492c; font-size: 12.5px; }
+
+/* ---------- cards ---------- */
+.ew-card {
+  background: var(--ew-card);
+  border-radius: var(--ew-radius);
+  box-shadow: var(--ew-shadow-card);
+}
+
+/* ---------- badge pill (hero) ---------- */
+.ew-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 22px;
+  border: 1px solid var(--ew-yellow);
+  border-radius: 999px;
+  color: var(--ew-yellow);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+/* ---------- dark hero shell ---------- */
+.ew-hero {
+  position: relative;
+  background: var(--ew-grad-dark);
+  color: #fff;
+  overflow: hidden;
+}
+.ew-hero-art {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 92%;
+  max-height: 620px;
+  max-width: 46%;
+  object-fit: contain;
+  object-position: right bottom;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14%);
+  mask-image: linear-gradient(to right, transparent 0, #000 14%);
+}
+
+/* ---------- carousel arrows ---------- */
+.ew-arrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--ew-border);
+  background: #fff;
+  color: var(--ew-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 17px;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.ew-arrow:hover { background: var(--ew-yellow); border-color: var(--ew-yellow); }
+.ew-arrow--yellow { background: var(--ew-yellow); border-color: var(--ew-yellow); }
+
+/* ---------- misc ---------- */
+.ew-link { color: var(--ew-navy-deep); font-weight: 500; cursor: pointer; text-decoration: none; }
+.ew-link:hover { text-decoration: underline; color: var(--ew-navy-deep); }
+
+.ew-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--ew-navy-deep);
+  cursor: pointer;
+}
+
+/* responsive type scale */
+@media (max-width: 991px) {
+  .ew-section { padding: 56px 0; }
+  .ew-section-title { font-size: 28px; margin-bottom: 32px; }
+}
+@media (max-width: 575px) {
+  .ew-section { padding: 44px 0; }
+  .ew-section-title { font-size: 23px; margin-bottom: 26px; }
+  .ew-btn { font-size: 15px; padding: 12px 24px; }
+}

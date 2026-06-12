@@ -5,20 +5,11 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { Formik } from "formik";
-import {
-  Button,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { loginData } from "../../Redux/Actions/dataAction";
 import { login, checkPaymentStatusAPI } from "../../Services/api";
 import CustomLoadingAnimation from "../Common/CustomLoadingAnimation";
 import CustomToast from "../Common/CustomToast";
+import "./Auth.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,24 +19,14 @@ const Login = () => {
   const isLoggedIn = useSelector((state) => !!state.dataReducer.loginData);
 
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
-  const preventMouseDown = (e) => e.preventDefault();
-
-  const handleResize = () => setIsMobile(window.innerWidth <= 768);
 
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const handleLogin = async (values, setSubmitting) => {
     try {
@@ -77,24 +58,24 @@ const Login = () => {
 
         if (paymentStatus.isUnpaid) {
           let title = "Payment Pending";
-          let text = "You have pending payments. Please complete your payment to proceed.";
+          let text =
+            "You have pending payments. Please complete your payment to proceed.";
 
           if (paymentStatus.unpaidReason === "expired") {
             title = "Package Expired";
-            text = "Your package has expired. Please complete your payment to renew your access.";
+            text =
+              "Your package has expired. Please complete your payment to renew your access.";
           } else if (paymentStatus.unpaidReason === "pending_verification") {
             title = "Payment Under Verification";
-            text = "Your payment is pending approval. Our team is currently verifying your screenshot.";
+            text =
+              "Your payment is pending approval. Our team is currently verifying your screenshot.";
           } else if (paymentStatus.unpaidReason === "rejected") {
             title = "Payment Rejected";
-            text = "Your previous payment was rejected. Please select a package and make a payment again.";
+            text =
+              "Your previous payment was rejected. Please select a package and make a payment again.";
           }
 
-          MySwal.fire({
-            title,
-            text,
-            icon: "warning",
-          });
+          MySwal.fire({ title, text, icon: "warning" });
         }
 
         navigate(redirectMap[userType] || "/");
@@ -120,12 +101,17 @@ const Login = () => {
   };
 
   return (
-    <div
-      className="d-flex align-items-center login-with-bg"
-      style={{ height: "80vh" }}
-    >
-      <div className="container-fluid row py-5">
-        <div className="col-12">
+    <div className="ew-auth-page">
+      <div className="ew-auth-layout">
+        <div className="ew-auth-card">
+          <div className="ew-auth-icon">
+            <i className="fa fa-lock"></i>
+          </div>
+          <h1 className="ew-auth-title">Welcome Back!</h1>
+          <p className="ew-auth-sub">
+            Login to your account and continue your journey with us
+          </p>
+
           <Formik
             initialValues={{ userName: "", password: "" }}
             validate={({ userName, password }) => {
@@ -134,7 +120,7 @@ const Login = () => {
               else if (
                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(userName)
               )
-                errors.userName = "Invalid username";
+                errors.userName = "Invalid email address";
               if (!password) errors.password = "Required";
               return errors;
             }}
@@ -151,105 +137,122 @@ const Login = () => {
               handleSubmit,
               isSubmitting,
             }) => (
-              <form onSubmit={handleSubmit} autoComplete="off">
-                <input
-                  type="text"
-                  name="fakeuser"
-                  style={{ display: "none" }}
-                />
+              <form
+                className="ew-auth-form"
+                onSubmit={handleSubmit}
+                autoComplete="off"
+              >
+                <input type="text" name="fakeuser" style={{ display: "none" }} />
                 <input
                   type="password"
                   name="fakepass"
                   style={{ display: "none" }}
                 />
-                <div className="row">
-                  <div className="col-12 text-center">
-                    <FormControl
-                      sx={{ m: 1, width: isMobile ? "100%" : "36ch" }}
-                      variant="outlined"
-                    >
-                      <InputLabel>Email</InputLabel>
-                      <OutlinedInput
-                        id="username"
-                        type="text"
-                        label="Username"
-                        name="userName"
-                        autoComplete="off"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.userName}
-                      />
-                    </FormControl>
-                    <div className="color-red">
-                      {errors.userName && touched.userName && errors.userName}
-                    </div>
+
+                <div className="ew-field">
+                  <label className="ew-label" htmlFor="username">
+                    Email Address
+                  </label>
+                  <div className="ew-input-wrap">
+                    <span className="ew-field-icon">
+                      <i className="fa fa-envelope-o"></i>
+                    </span>
+                    <input
+                      id="username"
+                      className="ew-input"
+                      type="text"
+                      name="userName"
+                      placeholder="Enter your email address"
+                      autoComplete="off"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.userName}
+                    />
                   </div>
-                  <div className="col-12 text-center mt-3">
-                    <FormControl
-                      sx={{ m: 1, width: isMobile ? "100%" : "36ch" }}
-                      variant="outlined"
-                    >
-                      <InputLabel>Password</InputLabel>
-                      <OutlinedInput
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        label="Password"
-                        name="password"
-                        autoComplete="new-password"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.password}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={togglePasswordVisibility}
-                              onMouseDown={preventMouseDown}
-                              edge="end"
-                            >
-                              {showPassword ? (
-                                <VisibilityOff />
-                              ) : (
-                                <Visibility />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                      />
-                    </FormControl>
-                    <div className="color-red">
-                      {errors.password && touched.password && errors.password}
-                    </div>
-                  </div>
-                  <div className="col-12 text-center mt-3">
-                    <Button
-                      sx={{ m: 1, width: isMobile ? "100%" : "36ch" }}
-                      type="submit"
-                      disabled={isSubmitting || Object.keys(errors).length > 0}
-                      variant="outlined"
-                      size="large"
-                    >
-                      Continue
-                    </Button>
-                  </div>
+                  {errors.userName && touched.userName && (
+                    <span className="ew-error">{errors.userName}</span>
+                  )}
                 </div>
+
+                <div className="ew-field">
+                  <label className="ew-label" htmlFor="password">
+                    Password
+                  </label>
+                  <div className="ew-input-wrap">
+                    <span className="ew-field-icon">
+                      <i className="fa fa-lock"></i>
+                    </span>
+                    <input
+                      id="password"
+                      className="ew-input"
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="Enter your password"
+                      autoComplete="new-password"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                    />
+                    <button
+                      type="button"
+                      className="ew-eye"
+                      aria-label="Toggle password visibility"
+                      onClick={() => setShowPassword((p) => !p)}
+                    >
+                      <i
+                        className={
+                          showPassword ? "fa fa-eye-slash" : "fa fa-eye"
+                        }
+                      ></i>
+                    </button>
+                  </div>
+                  {errors.password && touched.password && (
+                    <span className="ew-error">{errors.password}</span>
+                  )}
+                </div>
+
+                <div className="ew-auth-row">
+                  <label className="ew-remember">
+                    <input
+                      type="checkbox"
+                      className="ew-checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                    />
+                    Remember me
+                  </label>
+                  <span
+                    className="ew-link"
+                    onClick={() => navigate("/forgotPassword")}
+                  >
+                    Forgot Password?
+                  </span>
+                </div>
+
+                <button
+                  className="ew-btn ew-btn--navy ew-btn--block"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  Login&nbsp;&nbsp;→
+                </button>
               </form>
             )}
           </Formik>
+
+          <div className="ew-auth-foot">
+            Don&apos;t have an account?{" "}
+            <span
+              className="ew-link"
+              onClick={() => navigate("/register/candidate")}
+            >
+              Create Account
+            </span>
+          </div>
         </div>
-        <div className="col-12 text-center mt-4">
-          <u className="pointer" onClick={() => navigate("/forgotPassword")}>
-            Forgot Password
-          </u>
-        </div>
-        <div className="col-12 text-center mt-4">
-          Don't have an account?{" "}
-          <u
-            className="pointer"
-            onClick={() => navigate("/register/candidate")}
-          >
-            Create Account
-          </u>
+
+        <div className="ew-auth-art">
+          <img alt="" src="/assets/images/figma/login-student.png" />
         </div>
       </div>
       <CustomLoadingAnimation isLoading={loading} />

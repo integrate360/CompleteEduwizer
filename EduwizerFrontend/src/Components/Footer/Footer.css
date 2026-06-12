@@ -1,200 +1,86 @@
-footer {
-  position: relative;
-  color: var(--color-midnightblue);
-  font-family: var(--font-poppins);
-  font-size: var(--font-size-base);
-  background-color: var(--color-white);
-  border-top: 2px solid #f2d055;
-  mix-blend-mode: normal;
+/* Footer — EduwizerFigma/Footer.png */
+
+.ew-footer { background: #fff; }
+
+.ew-footer-main {
+  border-top: 1px solid var(--ew-border);
+  padding: 48px 24px 40px;
 }
 
-@media only screen and (max-width: 768px) {
-  .footer-container {
-    padding: 5px;
-  }
-}
-
-footer .footer-container {
-  height: auto;
-  display: flex;
-  padding-block: 2rem;
-  padding-inline: 2rem;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1.5rem;
-}
-
-footer .footer-container-lg {
-  display: flex;
-  justify-content: end;
-  box-shadow: none !important;
-  background-color: white !important;
-  padding-bottom: 10px !important;
-}
-
-footer .footer-container .footer-logo {
-  width: 22%;
-  gap: var(--gap-base);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-footer .footer-container .footer-logo .footer-logo-icon {
-  max-height: 50px;
-  width: auto;
-}
-
-footer .footer-container .footer-logo .footer-logo-text {
-  width: 100%;
-  text-align: left;
-  margin: 0;
-}
-
-footer .footer-container .footer-links-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  width: 50%;
-  height: auto;
+.ew-footer-grid {
+  max-width: var(--ew-container);
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 0.9fr;
+  gap: 32px;
 }
 
-footer .footer-container .footer-links-container .footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-base);
-  margin-bottom: 1rem !important;
+.ew-footer-brand img { height: 52px; width: fit-content; }
+.ew-footer-brand p {
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ew-body);
+  max-width: 220px;
 }
 
-footer
-  .footer-container
-  .footer-links-container
-  .footer-links
-  .footer-links-head {
-  font-weight: bold;
+.ew-footer-head {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ew-navy);
+  margin-bottom: 18px;
 }
 
-footer
-  .footer-container
-  .footer-links-container
-  .footer-links
-  .footer-links-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-base);
-}
-
-footer
-  .footer-container
-  .footer-links-container
-  .footer-links
-  .footer-links-content
-  a {
-  text-decoration: none;
-  color: var(--color-midnightblue);
-}
-
-footer
-  .footer-container
-  .footer-links-container
-  .footer-links
-  .footer-links-content.social-links {
-  flex-direction: row;
-}
-
-footer
-  .footer-container
-  .footer-links-container
-  .footer-links
-  .footer-links-content.social-links
-  .social-icon {
-  flex-shrink: 0;
-  height: 2rem;
-  position: relative;
-  width: 2rem;
-}
-
-footer .footer-container .footer-logo.d-lg-flex {
-  width: 20%;
-  align-items: flex-start;
-}
-
-footer .footer-container .footer-logo.d-lg-flex .footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-base);
-}
-
-footer .footer-container .footer-logo.d-lg-flex .footer-links-head {
-  font-weight: bold;
-}
-
-footer .footer-cin-number {
-  text-align: right;
-  padding-right: 3rem;
-}
-
-@media screen and (max-width: 1024px) {
-  footer .footer-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2.5rem;
-    padding-block: 2rem;
-  }
-  
-  footer .footer-container .footer-logo,
-  footer .footer-container .footer-logo.d-lg-flex {
-    width: 100% !important;
-    align-items: center;
-    text-align: center;
-  }
-  
-  footer .footer-container .footer-logo .footer-logo-text {
-    text-align: center;
-    max-width: 500px;
-    margin: 0 auto;
-  }
-  
-  footer .footer-container .footer-links-container {
-    width: 100%;
-    margin-top: 1rem;
-  }
-  
-  footer .footer-container .footer-logo.d-lg-flex .footer-links {
-    align-items: center;
-  }
-  
-  footer .footer-cin-number {
-    text-align: center;
-    padding-right: 0;
-    margin-top: 1rem;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .footer-logo-icon {
-    width: 80% !important;
-    margin-block: 1rem;
-  }
-  .footer-links {
-    justify-content: center;
-    text-align: center;
-  }
-  .footer-links:first-child {
-    grid-column: span 2;
-  }
-}
-
-.footer-links-content a {
-  text-decoration: none;
-  color: inherit;
+.ew-footer-col { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.ew-footer-col button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--ew-font);
+  font-size: 14px;
+  color: var(--ew-body);
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  text-align: left;
+}
+.ew-footer-col button:hover { color: var(--ew-navy); }
+
+.ew-footer-social { display: flex; gap: 12px; }
+.ew-footer-social a {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--ew-navy);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.ew-footer-social a:hover { transform: translateY(-2px); background: var(--ew-navy-deep); }
+.ew-footer-social img { width: 20px; height: 20px; filter: brightness(0) invert(1); }
+
+.ew-footer-bottom {
+  border-top: 1px solid var(--ew-border);
+  padding: 18px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 13.5px;
+  color: var(--ew-body);
+  text-align: center;
+}
+.ew-footer-bottom a { color: var(--ew-navy); font-weight: 500; text-decoration: none; }
+.ew-footer-bottom a:hover { text-decoration: underline; }
+.ew-footer-cin { font-size: 12px; color: var(--ew-muted); }
+
+@media (max-width: 991px) {
+  .ew-footer-grid { grid-template-columns: 1fr 1fr 1fr; row-gap: 36px; }
+  .ew-footer-brand { grid-column: 1 / -1; }
 }
 
-.footer-links-content a:hover {
-  text-decoration: underline !important;
-  cursor: pointer;
+@media (max-width: 575px) {
+  .ew-footer-grid { grid-template-columns: 1fr 1fr; }
+  .ew-footer-main { padding: 36px 20px 28px; }
 }

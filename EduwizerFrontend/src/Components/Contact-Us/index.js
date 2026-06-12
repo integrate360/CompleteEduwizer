@@ -1,284 +1,240 @@
-import "./index.css";
-import React, { useEffect, useRef, useState } from "react";
-import { Button } from "react-bootstrap";
+import { useState } from "react";
 import { contactUs } from "../../Services/api";
 import CustomToast from "../Common/CustomToast";
-import Subscribe from "../../Components/Subscribe";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import "./Contact.css";
+
 const MySwal = withReactContent(Swal);
+
+const ADDRESS =
+  "Enam Sambhav, C-20, G Block Rd, G Block BKC, Bandra Kurla Complex, Bandra East, Mumbai, Maharashtra 400051";
 
 const ContactUs = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
-  const ref = useRef(null);
-  const [width, setWidth] = useState(window.innerWidth);
+  const [sending, setSending] = useState(false);
 
-  const handleWindowSizeChange = () => {
-    setWidth(window.innerWidth);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleWindowSizeChange);
-    return () => {
-      window.removeEventListener("resize", handleWindowSizeChange);
-    };
-  }, []);
-
-  const isMobile = width <= 768;
   const validateForm = () => {
-    if (name.length === 0) {
-      alert("Enter your name");
-      return false;
-    } else if (email.length === 0) {
-      alert("Enter your email");
-      return false;
-    } else if (phone.length === 0) {
-      alert("Enter your phone number");
-      return false;
-    } else if (message.length === 0) {
-      alert("Enter a message");
-      return false;
-    }
-    return true;
+    if (name.trim().length === 0) return "Enter your name";
+    if (email.trim().length === 0) return "Enter your email";
+    if (phone.trim().length === 0) return "Enter your phone number";
+    if (message.trim().length === 0) return "Enter a message";
+    return null;
   };
-  const sendContactUsMessage = async () => {
-    if (!validateForm()) {
+
+  const sendContactUsMessage = async (e) => {
+    e.preventDefault();
+    const error = validateForm();
+    if (error) {
+      MySwal.fire({ icon: "warning", title: error });
       return;
     }
 
-    await contactUs({
-      name,
-      email,
-      phone,
-      message,
-    });
+    try {
+      setSending(true);
+      await contactUs({ name, email, phone, message });
 
-    setName("");
-    setEmail("");
-    setPhone("");
-    setMessage("");
+      setName("");
+      setEmail("");
+      setPhone("");
+      setMessage("");
 
-    MySwal.fire({
-      icon: "success",
-      title: "Thank you for contacting us.",
-      html: (
-        <div>
-          <CustomToast
-            type="success"
-            message="Our team will get back to you shortly"
-          />
-        </div>
-      ),
-      showConfirmButton: false,
-      timer: 8000,
-    });
+      MySwal.fire({
+        icon: "success",
+        title: "Thank you for contacting us.",
+        html: (
+          <div>
+            <CustomToast
+              type="success"
+              message="Our team will get back to you shortly"
+            />
+          </div>
+        ),
+        showConfirmButton: false,
+        timer: 8000,
+      });
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
-    <div className="contact-us page">
-      <section className="opener row">
-        <div
-          className={
-            isMobile ? "col-md-6 col-sm-12 text-center" : "col-md-6 col-sm-12"
-          }
-        >
-          <div className="opener-content-head mt-2">Contact Us</div>
-          <h1 className="opener-title mt-2">
-            <b>
-              We'd love to<br></br>hear from you.
-            </b>
-          </h1>
-          <div
-            className={isMobile ? "opener-foot fs-1 mt-2" : "opener-foot mt-2"}
-          >
-            So, let’s have a conversation.
+    <main className="ew-contact">
+      <section className="ew-section">
+        <div className="ew-container">
+          <div className="ew-contact-grid">
+            {/* ---- Send us a message ---- */}
+            <div className="ew-card ew-contact-form-card">
+              <h1>Send Us a Message</h1>
+              <p className="ew-contact-sub">
+                We&apos;d love to hear from you! Fill out the form below and
+                we&apos;ll get back to you within 24 hours.
+              </p>
+
+              <form onSubmit={sendContactUsMessage}>
+                <div className="ew-contact-form-row">
+                  <div className="ew-field">
+                    <label className="ew-label">
+                      Full Name <span className="req">*</span>
+                    </label>
+                    <div className="ew-input-wrap">
+                      <span className="ew-field-icon"><i className="fa fa-user-o"></i></span>
+                      <input
+                        className="ew-input"
+                        value={name}
+                        placeholder="Your full name"
+                        onChange={(evt) => setName(evt.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="ew-field">
+                    <label className="ew-label">
+                      Email Address <span className="req">*</span>
+                    </label>
+                    <div className="ew-input-wrap">
+                      <span className="ew-field-icon"><i className="fa fa-envelope-o"></i></span>
+                      <input
+                        className="ew-input"
+                        type="email"
+                        value={email}
+                        placeholder="you@example.com"
+                        onChange={(evt) => setEmail(evt.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="ew-field">
+                  <label className="ew-label">
+                    Phone Number <span className="req">*</span>
+                  </label>
+                  <div className="ew-input-wrap">
+                    <span className="ew-field-icon"><i className="fa fa-phone"></i></span>
+                    <input
+                      className="ew-input"
+                      type="tel"
+                      value={phone}
+                      placeholder="+91 91677 80061"
+                      onChange={(evt) => setPhone(evt.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="ew-field">
+                  <label className="ew-label">
+                    Your Message <span className="req">*</span>
+                  </label>
+                  <div className="ew-input-wrap">
+                    <textarea
+                      className="ew-textarea"
+                      value={message}
+                      placeholder="How can we help you?"
+                      onChange={(evt) => setMessage(evt.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <button
+                  className="ew-btn ew-btn--navy"
+                  type="submit"
+                  disabled={sending}
+                >
+                  <i className="fa fa-paper-plane"></i>&nbsp; Send Message
+                </button>
+              </form>
+            </div>
+
+            {/* ---- Our office ---- */}
+            <div className="ew-contact-office">
+              <h2>Our Office</h2>
+              <p className="ew-contact-sub">
+                Visit us at our office or reach us through any of our official
+                communication channels.
+              </p>
+
+              <div className="ew-office-item">
+                <span className="ew-office-icon"><i className="fa fa-map-marker"></i></span>
+                <div>
+                  <div className="ew-office-head">Head Office</div>
+                  <p>
+                    {ADDRESS}{" "}
+                    <a
+                      href={`https://maps.google.com/?q=${encodeURIComponent(ADDRESS)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      (View on Google Maps)
+                    </a>
+                  </p>
+                </div>
+              </div>
+
+              <div className="ew-office-item">
+                <span className="ew-office-icon"><i className="fa fa-phone"></i></span>
+                <div>
+                  <div className="ew-office-head">Phone</div>
+                  <p>
+                    <a href="tel:+919167780061">+91 91677 80061</a> /{" "}
+                    <a href="tel:+919167864061">+91 91678 64061</a>
+                  </p>
+                </div>
+              </div>
+
+              <div className="ew-office-item">
+                <span className="ew-office-icon"><i className="fa fa-envelope-o"></i></span>
+                <div>
+                  <div className="ew-office-head">Email</div>
+                  <p>
+                    <a href="mailto:support@eduwizer.com">support@eduwizer.com</a>
+                  </p>
+                </div>
+              </div>
+
+              <div className="ew-office-item">
+                <span className="ew-office-icon"><i className="fa fa-clock-o"></i></span>
+                <div>
+                  <div className="ew-office-head">Business Hours</div>
+                  <p>
+                    Mon – Sat: 9:00 AM – 6:30 PM
+                    <br />
+                    Sunday: Closed
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <Button
-            onClick={(e) => {
-              ref.current?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="w-50"
-            variant="warning"
-          >
-            Get In Touch
-          </Button>
-        </div>
-        <div className="col-md-6 col-sm-12 text-end">
-          <img
-            alt=""
-            src="/assets/images/png/contact-us.png"
-            style={{ width: "100%" }}
-          ></img>
         </div>
       </section>
-      <section className="other-ways">
-        <h2 className="other-ways-head">Other Ways To Reach Out</h2>
-        <div className="other-ways-content">
-          <div className="other-way">
-            <img
-              className="icon"
-              alt=""
-              src="/assets/images/svg/phone.svg"
-            />
-            <div className="text">
-              <a href="tel:+919167780061" target="_blank" rel="noreferrer">
-                +91 9167780061
-              </a>
-              <span className="mx-2">/</span>
-              <a href="tel:+919167864061" target="_blank" rel="noreferrer">
-                +91 9167864061
-              </a>
-            </div>
-          </div>
 
-          <div className="other-way">
-            <img
-              className="icon"
-              alt=""
-              src="/assets/images/svg/email.svg"
-            />
-            <div className="text">
-              <a 
-                href="mailto:support@eduwizer.com"
-                onClick={(e) => {
-                  window.location.href = "mailto:support@eduwizer.com";
-                  e.preventDefault();
-                }}
-              >
-                support@eduwizer.com
-              </a>
-            </div>
-          </div>
-          <div className="other-way">
-            <img
-              className="icon"
-              alt=""
-              src="/assets/images/png/website.png"
-            />
-            <div className="text">
-              <a
-                href="https://www.eduwizer.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                www.eduwizer.com
-              </a>
-            </div>
-          </div>
-
-          <div className="other-way">
-            <div className="text" style={{ color: "#1c115d" }}>
-              Enam Sambhav, C-20, G Block Rd, G Block BKC, Bandra Kurla Complex,
-              Bandra Eat, Mumbai. Maharashtra 400051
-            </div>
-            {/* <img className="icon" alt="" src="/assets/images/png/website.png" /> */}
-          </div>
-        </div>
-      </section>
-
-      <section className="follow-us">
-        <h2 className="follow-us-head">Follow Us </h2>
-        <div className="follow-us-content">
+      {/* ---- Find us here / map ---- */}
+      <section className="ew-contact-map-section">
+        <iframe
+          title="Eduwizer Office Location"
+          src={`https://www.google.com/maps?q=${encodeURIComponent(ADDRESS)}&output=embed`}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+        <div className="ew-card ew-contact-map-card">
+          <h2>Find Us Here</h2>
+          <p>
+            We are located in the heart of Mumbai&apos;s Bandra Kurla Complex —
+            easy to reach, let&apos;s hear from you and your vision.
+          </p>
           <a
-            href="https://www.facebook.com/Eduwizer/"
+            className="ew-btn ew-btn--yellow ew-btn--sm"
+            href={`https://maps.google.com/?q=${encodeURIComponent(ADDRESS)}`}
             target="_blank"
             rel="noreferrer"
           >
-            <img
-              className="icon"
-              alt=""
-              src="/assets/images/svg/facebook.svg"
-            />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/dr-nikkie-grover-37bb5521/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img
-              className="icon"
-              alt=""
-              src="/assets/images/svg/LinkedIn_icon_circle.svg"
-            />
-          </a>
-          <a
-            href="https://www.instagram.com/eduwizer_social_media_team_/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img
-              className="icon"
-              alt=""
-              src="/assets/images/svg/instagram.svg"
-            />
+            Get Directions →
           </a>
         </div>
       </section>
-      <Subscribe bg={false} subHead={false}></Subscribe>
-      <div className="message-us no-side-gap mb-2 py-4" ref={ref}>
-        <div className="message-us-container">
-          <div className="message-head row m-0">
-            <div className="m-input-container col-12 col-md-12 col-lg-6">
-              <input
-                required
-                className="m-input"
-                value={name}
-                placeholder=""
-                onChange={(evt) => setName(evt.target.value)}
-              />
-              <div className="title">Your Name</div>
-            </div>
-            <div className="m-input-container  col-12 col-md-12 col-lg-6">
-              <input
-                required
-                className="m-input"
-                value={phone}
-                type="number"
-                placeholder=""
-                onChange={(evt) => setPhone(evt.target.value)}
-              />
-              <div className="title">Phone number</div>
-            </div>
-          </div>
-          <div className="message-head row m-0">
-            <div className="m-input-container  col-12 col-md-12 col-lg-12">
-              <input
-                required
-                className="m-input"
-                value={email}
-                placeholder=""
-                onChange={(evt) => setEmail(evt.target.value)}
-              />
-              <div className="title">Email Address</div>
-            </div>
-          </div>
-          <div className="message-head row m-0">
-            <div className=" m-input-container  col-12 col-md-12 col-lg-12">
-              <textarea
-                required
-                className="m-input"
-                value={message}
-                placeholder=""
-                onChange={(evt) => setMessage(evt.target.value)}
-              />
-              <div className="title">Your Message</div>
-            </div>
-          </div>
-          <div className="message-head row m-0">
-            <Button
-              variant="warning"
-              type="submit"
-              onClick={() => sendContactUsMessage()}
-            >
-              <div className="btn-text p-1.5">Send Message</div>
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
+    </main>
   );
 };
 

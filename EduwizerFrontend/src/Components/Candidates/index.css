@@ -1,54 +1,50 @@
-.candidates {
-  display: flex;
-  height: auto; /* Adjust to fit content */
-  background-color: var(--color-goldenrod);
-  padding: 1rem; /* Optional padding for better spacing */
-}
+/* Stats strip — EduwizerFigma home.png (light) & About.png (yellow band) */
 
-.candidates .candidate-container {
+.ew-stats { background: #fff; padding: 56px 24px; }
+
+.ew-stats-grid {
+  max-width: var(--ew-container);
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Default layout: 4 columns */
-  gap: 1rem; 
-  width: 100%;
-  height: auto;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
 }
 
-.candidates .candidate-container .candidate {
+.ew-stat {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 1rem;
-  justify-content: space-evenly;
-  background-color: #f2d055 !important; 
-  border-right: 1px solid var(--color-black);
+  gap: 16px;
+  justify-content: center;
 }
 
-.candidates .candidate-container .candidate:last-child {
-  border-right: none; /* Remove border for the last candidate */
+.ew-stat-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
 }
+.ew-stat-icon.c1 { background: #fdeecd; }
+.ew-stat-icon.c2 { background: #ece8fb; }
+.ew-stat-icon.c3 { background: #fde3d3; }
+.ew-stat-icon.c4 { background: #fdd9c9; }
 
-.candidates .candidate-container .candidate .m-btn {
-  font-size: 1.25rem;
-  margin-top: auto;
-  padding: 0.5rem 1rem;
+.ew-stat-num { font-size: 24px; font-weight: 700; color: var(--ew-ink); line-height: 1.2; }
+.ew-stat-label { font-size: 13.5px; color: var(--ew-muted); }
+
+/* yellow variant (About page) */
+.ew-stats--yellow { background: var(--ew-yellow); }
+.ew-stats--yellow .ew-stat { flex-direction: column; gap: 10px; text-align: center; }
+.ew-stats--yellow .ew-stat-num { color: #151b40; }
+.ew-stats--yellow .ew-stat-label { color: #3d3a25; font-weight: 500; }
+
+@media (max-width: 991px) {
+  .ew-stats-grid { grid-template-columns: repeat(2, 1fr); row-gap: 34px; }
 }
-
-.candidates .candidate-container .candidate-count {
-  font-size: 1.5rem;
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-@media (max-width: 768px) {
-  .candidates {
-    margin-top: 2rem;
-  }
-  .candidates .candidate-container {
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 1rem;
-  }
-
-  .candidates .candidate-container .candidate:nth-child(2n) {
-    border-right: none; /* Remove border for every second item in mobile layout */
-  }
+@media (max-width: 575px) {
+  .ew-stats-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .ew-stat { flex-direction: column; text-align: center; gap: 8px; }
 }

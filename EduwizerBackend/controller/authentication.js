@@ -1,7 +1,9 @@
+const crypto = require("crypto");
 const authenticationService = require("../services/authentication.service");
 const jwtConfig = require("../config/jwt.config");
 const sgMail = require("../services/mail.service");
 const Payment = require("../models/paymentModel.js");
+const passwordHelper = require("../helper/password");
 const controllers = {
 
   signUp: async function (req, res) {
@@ -16,6 +18,11 @@ const controllers = {
       // 🔍 Check if user already exists
       const existingUser = await authenticationService.getUserDetailsByUserId(find, select);
       if (existingUser) throw new Error("User Already Exists");
+
+      // 🔒 Hash the password before persisting (never store plaintext)
+      if (req.body.password) {
+        req.body.password = await passwordHelper.hashPassword(req.body.password);
+      }
 
       // ➕ Create a new user
       const newUser = await authenticationService.addPendingUser(req.body);
@@ -73,7 +80,8 @@ const controllers = {
         select
       );
       if (userData) {
-        const otp = Math.floor(100000 + Math.random() * 9000);
+        // Crypto-strong 6-digit OTP across the full 100000–999999 range
+        const otp = crypto.randomInt(100000, 1000000);
         const apiKey = sgMail.setApiKey(
           process.env.EMAIL_PROVIDER_AUTH_PASSWORD
         );
@@ -146,7 +154,26 @@ const controllers = {
 
       if (data) {
         // if (data.emailVerified > 0) {
-        if (data && data.password && data.password == req.body.password) {
+        const { ok, needsRehash } = await passwordHelper.verifyPassword(
+          req.body.password,
+          data.password
+        );
+
+        if (data && data.password && ok) {
+          // Lazy migration: legacy plaintext rows get a hashed copy on success
+          if (needsRehash) {
+            try {
+              const newHash = await passwordHelper.hashPassword(req.body.password);
+              await authenticationService.updateUserDetails(
+                { _id: data._id, email: data.email },
+                { $set: { password: newHash } },
+                { new: true }
+              );
+            } catch (rehashErr) {
+              console.error("Password rehash failed (non-fatal):", rehashErr.message);
+            }
+          }
+
           const dataForJwt = {
             userId: data._id,
             userType: data.userType,
@@ -158,9 +185,18 @@ const controllers = {
             process.env.secret
           );
 
+          // Never return the password (hash) to the client
+          const safeData = {
+            _id: data._id,
+            email: data.email,
+            userType: data.userType,
+            emailVerified: data.emailVerified,
+            phoneVerified: data.phoneVerified,
+          };
+
           response = {
             success: 1,
-            data: data,
+            data: safeData,
             session: generateSession,
             message: "SucessFully Login",
           };
@@ -333,9 +369,10 @@ const controllers = {
       // Check if the token is valid
       if (decodedToken) {
         const find = { _id: decodedToken.userId };
+        const hashedPassword = await passwordHelper.hashPassword(newPassword);
         const updateData = {
           $set: {
-            password: newPassword,
+            password: hashedPassword,
           },
         };
         const option = {

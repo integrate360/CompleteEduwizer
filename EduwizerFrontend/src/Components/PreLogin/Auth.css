@@ -1,0 +1,182 @@
+/* Auth pages (Login / Sign Up) — EduwizerFigma Login.png + SignUp.png */
+
+.ew-auth-page {
+  background:
+    radial-gradient(900px 420px at 8% 12%, #e9edfb 0%, transparent 60%),
+    radial-gradient(700px 380px at 92% 80%, #eef0fc 0%, transparent 55%),
+    var(--ew-lavender);
+  min-height: calc(100vh - 81px);
+  padding: 56px 24px 72px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ew-auth-layout {
+  max-width: var(--ew-container);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  position: relative;
+}
+
+.ew-auth-card {
+  background: #fff;
+  border-radius: var(--ew-radius-lg);
+  box-shadow: var(--ew-shadow-pop);
+  padding: 44px 48px;
+  width: 100%;
+  max-width: 520px;
+  position: relative;
+  z-index: 2;
+}
+
+.ew-auth-card--wide { max-width: 680px; }
+
+.ew-auth-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--ew-cream);
+  border: 1px solid #f1e3b8;
+  color: var(--ew-navy-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  margin: 0 auto 18px;
+}
+
+.ew-auth-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ew-navy);
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+.ew-auth-sub {
+  font-size: 14px;
+  color: var(--ew-muted);
+  text-align: center;
+  margin: 0 0 30px;
+}
+
+.ew-auth-form { display: flex; flex-direction: column; gap: 18px; }
+
+.ew-auth-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 20px;
+}
+.ew-auth-grid .span-2 { grid-column: 1 / -1; }
+.ew-auth-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px 20px;
+}
+
+.ew-auth-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ew-remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--ew-ink);
+  cursor: pointer;
+}
+
+.ew-auth-foot {
+  text-align: center;
+  font-size: 14px;
+  color: var(--ew-body);
+  margin-top: 22px;
+}
+
+/* phone field with country code */
+.ew-phone-wrap { display: flex; gap: 10px; }
+.ew-phone-wrap .ew-cc {
+  width: 92px;
+  flex-shrink: 0;
+}
+
+/* uploads */
+.ew-upload-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.ew-upload-box {
+  border: 1.5px dashed var(--ew-input-border);
+  border-radius: var(--ew-radius);
+  background: #fbfcff;
+  padding: 26px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  position: relative;
+}
+.ew-upload-box:hover { border-color: var(--ew-navy-deep); background: #f6f8ff; }
+.ew-upload-box input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.ew-upload-box .up-icon { font-size: 26px; color: var(--ew-navy-deep); }
+.ew-upload-box .up-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ew-ink);
+  margin-top: 10px;
+}
+.ew-upload-box .up-title .browse { color: var(--ew-navy-deep); text-decoration: underline; }
+.ew-upload-box .up-hint { font-size: 12px; color: var(--ew-muted); margin-top: 6px; }
+.ew-upload-box .up-file { font-size: 12.5px; color: var(--ew-navy-deep); font-weight: 600; margin-top: 8px; word-break: break-all; }
+
+/* art */
+.ew-auth-art {
+  flex-shrink: 0;
+  max-width: 420px;
+  position: relative;
+  z-index: 1;
+}
+.ew-auth-art img {
+  width: 100%;
+  -webkit-mask-image: radial-gradient(85% 85% at 50% 50%, #000 60%, transparent 100%);
+  mask-image: radial-gradient(85% 85% at 50% 50%, #000 60%, transparent 100%);
+}
+
+/* agree row */
+.ew-agree {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ew-body);
+}
+.ew-agree input { margin-top: 3px; }
+
+@media (max-width: 1199px) {
+  .ew-auth-art { max-width: 330px; }
+}
+
+@media (max-width: 991px) {
+  .ew-auth-art { display: none; }
+  .ew-auth-card { padding: 36px 32px; }
+}
+
+@media (max-width: 575px) {
+  .ew-auth-page { padding: 32px 16px 48px; }
+  .ew-auth-card { padding: 28px 20px; border-radius: 18px; }
+  .ew-auth-title { font-size: 23px; }
+  .ew-auth-grid, .ew-auth-grid-3, .ew-upload-grid { grid-template-columns: 1fr; }
+}

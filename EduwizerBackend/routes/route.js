@@ -10,7 +10,57 @@ const checkAuthorizationKey = require("../config/jwt.config");
 // const resizeImage = require("../helper/upload")
 const multer = require("multer");
 const handleUpload = require("../helper/upload");
+const { authLimiter, uploadLimiter } = require("../middleware/rateLimiters");
 const upload = multer({ dest: "uploads/" });
+
+// Hardened uploader for public resume/photo uploads (signup happens pre-auth):
+// allow only images + pdf/doc/docx, cap size at 5MB.
+const ALLOWED_UPLOAD_TYPES = new Set([
+  "image/png",
+  "image/jpeg",
+  "image/jpg",
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+]);
+const resumeUpload = multer({
+  dest: "uploads/",
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (ALLOWED_UPLOAD_TYPES.has(file.mimetype)) return cb(null, true);
+    cb(new Error("Unsupported file type. Allowed: JPG, PNG, PDF, DOC, DOCX."));
+  },
+}).single("file");
+
+// Wrap multer so fileFilter/limit errors return a clean 400 instead of crashing.
+const resumeUploadSafe = (req, res, next) =>
+  resumeUpload(req, res, (err) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ success: 0, data: [], message: err.message });
+    }
+    next();
+  });
+
+// Image-only uploader for payment screenshots, capped at 5MB.
+const screenshotUpload = multer({
+  dest: "uploads/",
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (/^image\/(png|jpe?g|webp)$/.test(file.mimetype)) return cb(null, true);
+    cb(new Error("Screenshot must be a PNG, JPG or WEBP image."));
+  },
+}).single("screenshot");
+const screenshotUploadSafe = (req, res, next) =>
+  screenshotUpload(req, res, (err) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ success: 0, data: [], message: err.message });
+    }
+    next();
+  });
 
 module.exports = function (app) {
   // ========================Authentication======================
@@ -21,7 +71,7 @@ module.exports = function (app) {
 
   app
     .route("/eduwizer/login")
-    .post(authenticationValidator.loginValidator, authentication.login);
+    .post(authLimiter, authenticationValidator.loginValidator, authentication.login);
 
 
 
@@ -43,7 +93,7 @@ module.exports = function (app) {
 
   app
     .route("/eduwizer/getAllProfiles")
-    .get(profileController.getAllProfiles);
+    .get(checkAuthorizationKey.checkToken, profileController.getAllProfiles);
 
   app
     .route("/eduwizer/searchProfile")
@@ -56,16 +106,17 @@ module.exports = function (app) {
   // OTP Verification
   app
     .route("/eduwizer/send/otp")
-    .post(authenticationValidator.sendOtp, authentication.sendOtp);
+    .post(authLimiter, authenticationValidator.sendOtp, authentication.sendOtp);
 
   app
     .route("/eduwizer/verify/otp")
-    .post(authenticationValidator.verifyOtp, authentication.verifyOtp);
+    .post(authLimiter, authenticationValidator.verifyOtp, authentication.verifyOtp);
 
   // Forgot & Reset Password
   app
     .route("/eduwizer/forgotPassword")
     .post(
+      authLimiter,
       authenticationValidator.forgotPassword,
       authentication.forgotPassword
     );
@@ -73,6 +124,7 @@ module.exports = function (app) {
   app
     .route("/eduwizer/setNewPassword")
     .post(
+      authLimiter,
       authenticationValidator.setNewPasswordValidator,
       authentication.setNewPassword
     );
@@ -207,7 +259,9 @@ module.exports = function (app) {
     );
 
   // Resume Upload
-  app.route("/uploadResume").post(upload.single("file"), profileController.uploadResume);
+  app
+    .route("/uploadResume")
+    .post(uploadLimiter, resumeUploadSafe, profileController.uploadResume);
 
   // User-related routes
   app
@@ -239,7 +293,7 @@ module.exports = function (app) {
     .route("/createPayment")
     .post(
       checkAuthorizationKey.checkToken,
-      upload.single("screenshot"),
+      screenshotUploadSafe,
       paymentController.createPayment
     );
   app.route("/getAllPayments").get(paymentController.getAllPayments);

@@ -31,6 +31,7 @@ import {
 import CustomLoadingAnimation from "../Common/CustomLoadingAnimation";
 import CustomToast from "../Common/CustomToast";
 import UploadFile from "../PreLogin/UploadFile";
+import "./Profile.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -581,7 +582,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="row">
+      <div className="ew-profile row">
+        <h1 className="ew-profile-title col-12">Edit Profile</h1>
         {/* <h3 className='col-12 text-center'>Sign up as {type}</h3> */}
         <div className="col-md-3 col-lg-3 px-4">
           <div className="border-custom p-2">

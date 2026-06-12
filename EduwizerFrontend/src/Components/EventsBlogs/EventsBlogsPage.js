@@ -1,9 +1,27 @@
-import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getEvents, getBlogs } from "../../Services/api";
-import BlogsAds from "../Blogs/Ads";
 import "./EventsBlogs.css";
+
+const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+const formatBadge = (ts) => {
+  if (!ts) return null;
+  const d = new Date(ts);
+  return { day: String(d.getDate()).padStart(2, "0"), month: MONTHS[d.getMonth()] };
+};
+
+const formatDate = (ts) => {
+  if (!ts) return "";
+  return new Date(ts).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+const readTime = (text = "") =>
+  `${Math.max(1, Math.round(text.split(/\s+/).length / 200))} Min Read`;
 
 function EventsBlogsPage() {
   const [events, setEvents] = useState([]);
@@ -11,196 +29,233 @@ function EventsBlogsPage() {
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [loadingBlogs, setLoadingBlogs] = useState(true);
 
-  /* ---- Data Fetching ---- */
-  const fetchEvents = async () => {
-    setLoadingEvents(true);
-    try {
-      const response = await getEvents();
-      setEvents(response.data.data || []);
-    } catch (error) {
-      console.error("Error fetching events:", error);
-    } finally {
-      setLoadingEvents(false);
-    }
-  };
-
-  const fetchBlogs = async () => {
-    setLoadingBlogs(true);
-    try {
-      const resp = await getBlogs();
-      setBlogs(resp.data.data || []);
-    } catch (error) {
-      console.error("Error fetching blogs:", error);
-    } finally {
-      setLoadingBlogs(false);
-    }
-  };
+  const eventsRef = useRef(null);
+  const blogsRef = useRef(null);
 
   useEffect(() => {
-    fetchEvents();
-    fetchBlogs();
+    (async () => {
+      try {
+        const response = await getEvents();
+        setEvents(response.data.data || []);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoadingEvents(false);
+      }
+    })();
+    (async () => {
+      try {
+        const resp = await getBlogs();
+        setBlogs(resp.data.data || []);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setLoadingBlogs(false);
+      }
+    })();
   }, []);
 
-  /* ---- Skeleton loaders ---- */
-  const SkeletonEvent = () => (
-    <div className="eb-event-card" style={{ opacity: 0.5 }}>
-      <div className="eb-event-img-wrap" style={{ background: "#dde0ef", minHeight: 190 }} />
-      <div className="eb-event-body">
-        <div style={{ height: 12, background: "#dde0ef", borderRadius: 6, width: "30%", marginBottom: 12 }} />
-        <div style={{ height: 20, background: "#dde0ef", borderRadius: 6, width: "70%", marginBottom: 10 }} />
-        <div style={{ height: 12, background: "#dde0ef", borderRadius: 6, width: "90%", marginBottom: 6 }} />
-      </div>
-    </div>
-  );
+  const scrollTo = (ref) =>
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  const SkeletonBlog = () => (
-    <div className="eb-blog-card" style={{ opacity: 0.5 }}>
-      <div className="eb-blog-img-wrap" style={{ background: "#dde0ef" }} />
-      <div className="eb-blog-body">
-        <div style={{ height: 10, background: "#dde0ef", borderRadius: 6, width: "40%", marginBottom: 10 }} />
-        <div style={{ height: 16, background: "#dde0ef", borderRadius: 6, width: "80%", marginBottom: 8 }} />
-        <div style={{ height: 10, background: "#dde0ef", borderRadius: 6, width: "90%" }} />
+  const featuredEvent = events[0];
+  const upcomingEvents = events.length > 1 ? events.slice(1) : events;
+  const featuredBlog = blogs[0];
+  const latestBlogs = blogs.length > 1 ? blogs.slice(1) : blogs;
+
+  const SkeletonCard = () => (
+    <div className="ew-event-card" style={{ opacity: 0.5 }}>
+      <div className="ew-event-img" style={{ background: "#dde0ef" }} />
+      <div className="ew-event-body">
+        <div style={{ height: 12, background: "#dde0ef", borderRadius: 6, width: "30%", marginBottom: 12 }} />
+        <div style={{ height: 18, background: "#dde0ef", borderRadius: 6, width: "75%" }} />
       </div>
     </div>
   );
 
   return (
-    <div className="eb-page">
-
-      {/* ===================== HERO ===================== */}
-      <div className="eb-hero">
-        <Container>
-          <div className="eb-hero-inner">
-            <div className="eb-hero-content">
-              <div className="eb-hero-badge">✦ Knowledge Hub</div>
-              <h1 className="eb-hero-title">
-                Events &amp; <span>Blogs</span>
-              </h1>
-              <p className="eb-hero-subtitle">
-                Stay updated with the latest events, industry insights, and expert
-                articles curated just for you.
-              </p>
-            </div>
-            <div className="eb-hero-character-wrap">
-              <img
-                src="/assets/images/png/headline-boy.png"
-                alt="Character"
-                className="eb-hero-character"
-              />
-            </div>
+    <main className="ew-eb-page">
+      {/* ============ HERO ============ */}
+      <section className="ew-hero ew-eb-hero">
+        <img
+          className="ew-hero-art"
+          alt=""
+          src="/assets/images/figma/hero-character.png"
+        />
+        <div className="ew-hero-content">
+          <div className="ew-hero-badge">✦ Knowledge Hub</div>
+          <h1 className="ew-hero-title">Events &amp; Blogs</h1>
+          <p className="ew-hero-sub">
+            Stay updated with the latest events, industry insights, and expert
+            articles curated just for you.
+          </p>
+          <div className="ew-hero-cta">
+            <button
+              className="ew-btn ew-btn--yellow"
+              onClick={() => scrollTo(eventsRef)}
+            >
+              Explore Events →
+            </button>
+            <button
+              className="ew-btn ew-btn--outline"
+              onClick={() => scrollTo(blogsRef)}
+            >
+              Read Insights
+            </button>
           </div>
-        </Container>
-      </div>
+        </div>
+      </section>
 
-      {/* ===================== CONTENT ===================== */}
-      <div className="eb-content">
-        <Container>
-          <Row>
-            {/* ---- Main Panel ---- */}
-            <Col lg={9} md={8} sm={12}>
+      {/* ============ FEATURED EVENT ============ */}
+      <section className="ew-section ew-eb-featured" ref={eventsRef}>
+        <div className="ew-container">
+          <h2 className="ew-section-title ew-section-title--left">Featured Event</h2>
+          <p className="ew-eb-section-sub">Our flagship summit for institutional change-makers.</p>
 
-              {/* ========== EVENTS SECTION ========== */}
-              <div className="eb-section-heading">
-                <div className="eb-section-icon">🎯</div>
-                <div className="eb-section-label">
-                  Our Events
-                  <small>Discover and explore events near you</small>
-                </div>
-                <hr className="eb-divider" />
-              </div>
-
-              {loadingEvents ? (
-                [1, 2, 3].map((i) => <SkeletonEvent key={i} />)
-              ) : events.length === 0 ? (
-                <div className="eb-empty">
-                  <div className="eb-empty-icon">📅</div>
-                  <p>No events found at the moment. Check back soon!</p>
-                </div>
-              ) : (
-                events.map((event, index) => (
-                  <div className="eb-event-card" key={`event-${index}`}>
-                    <div className="eb-event-img-wrap">
-                      <img
-                        src={event.image}
-                        alt={event.title}
-                        className="eb-event-img"
-                      />
-                    </div>
-                    <div className="eb-event-body">
-                      <p className="eb-event-category">Event</p>
-                      <h2 className="eb-event-title">
-                        <Link to={`/events-details/${event?._id}`}>
-                          {event.title}
-                        </Link>
-                      </h2>
-                      <p className="eb-event-desc">{event.description}</p>
-                      <div className="eb-event-footer">
-                        <Link to={`/events-details/${event?._id}`} className="eb-btn-know-more">
-                          View Details →
-                        </Link>
-                      </div>
-                    </div>
+          {loadingEvents ? (
+            <SkeletonCard />
+          ) : !featuredEvent ? (
+            <div className="ew-eb-empty">📅 No events found at the moment. Check back soon!</div>
+          ) : (
+            <div className="ew-feature-card">
+              <div className="ew-feature-media">
+                <img src={featuredEvent.image} alt={featuredEvent.title} />
+                {formatBadge(featuredEvent.createdTimestamp) && (
+                  <div className="ew-date-badge">
+                    <b>{formatBadge(featuredEvent.createdTimestamp).day}</b>
+                    <span>{formatBadge(featuredEvent.createdTimestamp).month}</span>
                   </div>
-                ))
-              )}
-
-              {/* ========== BLOGS SECTION ========== */}
-              <div className="eb-section-heading" style={{ marginTop: 48 }}>
-                <div className="eb-section-icon">📝</div>
-                <div className="eb-section-label">
-                  Latest Blogs
-                  <small>Expert articles and industry insights</small>
-                </div>
-                <hr className="eb-divider" />
+                )}
               </div>
-
-              {loadingBlogs ? (
-                [1, 2, 3].map((i) => <SkeletonEvent key={i} />)
-              ) : blogs.length === 0 ? (
-                <div className="eb-empty">
-                  <div className="eb-empty-icon">📰</div>
-                  <p>No blogs published yet. Stay tuned!</p>
+              <div className="ew-feature-body">
+                <span className="ew-tag">Event</span>
+                <h3>{featuredEvent.title}</h3>
+                <div className="ew-feature-meta">
+                  <span>
+                    <i className="fa fa-calendar-o"></i>{" "}
+                    {formatDate(featuredEvent.createdTimestamp)}
+                  </span>
                 </div>
-              ) : (
-                blogs.map((blog, index) => (
-                  <div className="eb-event-card" key={`blog-${index}`}>
-                    <div className="eb-event-img-wrap">
-                      <img
-                        src={blog.image}
-                        alt={blog.title}
-                        className="eb-event-img"
-                      />
-                    </div>
-                    <div className="eb-event-body">
-                      <p className="eb-event-category">Blog</p>
-                      <h2 className="eb-event-title">
-                        <Link to={`/blogs-details/${blog?._id}`}>
-                          {blog.title}
-                        </Link>
-                      </h2>
-                      {blog.author && (
-                        <p className="eb-blog-author" style={{ fontSize: "0.8rem", color: "#999", marginBottom: 8 }}>
-                          ✍️ {blog.author}
-                        </p>
+                <p className="ew-feature-desc">{featuredEvent.description}</p>
+                <Link
+                  to={`/events-details/${featuredEvent._id}`}
+                  className="ew-btn ew-btn--yellow ew-btn--sm"
+                >
+                  Get Details
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ============ UPCOMING EVENTS ============ */}
+      <section className="ew-section ew-eb-upcoming">
+        <div className="ew-container">
+          <h2 className="ew-section-title ew-section-title--left">Upcoming Events</h2>
+          <div className="ew-eb-grid">
+            {loadingEvents
+              ? [1, 2, 3, 4].map((i) => <SkeletonCard key={i} />)
+              : upcomingEvents.map((event) => (
+                  <div className="ew-event-card" key={event._id}>
+                    <div className="ew-event-img">
+                      <img src={event.image} alt={event.title} />
+                      {formatBadge(event.createdTimestamp) && (
+                        <div className="ew-date-badge ew-date-badge--sm">
+                          <b>{formatBadge(event.createdTimestamp).day}</b>
+                          <span>{formatBadge(event.createdTimestamp).month}</span>
+                        </div>
                       )}
-                      <p className="eb-event-desc">{blog.description}</p>
-                      <div className="eb-event-footer">
-                        <Link to={`/blogs-details/${blog?._id}`} className="eb-btn-know-more">
-                          Know More →
-                        </Link>
+                    </div>
+                    <div className="ew-event-body">
+                      <span className="ew-tag ew-tag--plain">Event</span>
+                      <h3>
+                        <Link to={`/events-details/${event._id}`}>{event.title}</Link>
+                      </h3>
+                      <Link
+                        to={`/events-details/${event._id}`}
+                        className="ew-eb-more"
+                      >
+                        Get Details →
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ FEATURED BLOG ============ */}
+      <section className="ew-section ew-eb-featured" ref={blogsRef}>
+        <div className="ew-container">
+          <h2 className="ew-section-title ew-section-title--left">Featured Blog</h2>
+
+          {loadingBlogs ? (
+            <SkeletonCard />
+          ) : !featuredBlog ? (
+            <div className="ew-eb-empty">📰 No blogs published yet. Stay tuned!</div>
+          ) : (
+            <div className="ew-feature-card ew-feature-card--reverse">
+              <div className="ew-feature-body">
+                <span className="ew-tag">Blog</span>
+                <h3>{featuredBlog.title}</h3>
+                <div className="ew-feature-meta">
+                  {featuredBlog.author && (
+                    <span className="ew-author">
+                      <span className="ew-author-avatar">
+                        {featuredBlog.author.charAt(0).toUpperCase()}
+                      </span>
+                      By {featuredBlog.author}
+                    </span>
+                  )}
+                  <span>
+                    {readTime(featuredBlog.description)} •{" "}
+                    {formatDate(featuredBlog.createdTimestamp)}
+                  </span>
+                </div>
+                <p className="ew-feature-desc">{featuredBlog.description}</p>
+                <Link
+                  to={`/blogs-details/${featuredBlog._id}`}
+                  className="ew-btn ew-btn--yellow ew-btn--sm"
+                >
+                  Read Full Article
+                </Link>
+              </div>
+              <div className="ew-feature-media">
+                <img src={featuredBlog.image} alt={featuredBlog.title} />
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ============ LATEST INSIGHTS ============ */}
+      <section className="ew-section ew-eb-upcoming">
+        <div className="ew-container">
+          <h2 className="ew-section-title ew-section-title--left">Latest Insights</h2>
+          <div className="ew-eb-grid">
+            {loadingBlogs
+              ? [1, 2, 3, 4].map((i) => <SkeletonCard key={i} />)
+              : latestBlogs.map((blog) => (
+                  <div className="ew-event-card" key={blog._id}>
+                    <div className="ew-event-img">
+                      <img src={blog.image} alt={blog.title} />
+                    </div>
+                    <div className="ew-event-body">
+                      <span className="ew-tag ew-tag--plain">Blog</span>
+                      <h3>
+                        <Link to={`/blogs-details/${blog._id}`}>{blog.title}</Link>
+                      </h3>
+                      <div className="ew-eb-meta">
+                        {readTime(blog.description)} • {formatDate(blog.createdTimestamp)}
                       </div>
                     </div>
                   </div>
-                ))
-              )}
-            </Col>
-
-            {/* ---- Sidebar ---- */}
-            <BlogsAds />
-          </Row>
-        </Container>
-      </div>
-    </div>
+                ))}
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
 

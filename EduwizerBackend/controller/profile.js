@@ -2,6 +2,17 @@ const profileService = require("../services/profile.service");
 const mongoose = require("mongoose");
 const AWS = require("aws-sdk");
 const fs = require("fs");
+const passwordHelper = require("../helper/password");
+
+/**
+ * Build a case-insensitive *literal* regex from untrusted input.
+ * Coerces to string (blocks object/operator injection) and escapes regex
+ * metacharacters (blocks ReDoS via attacker-controlled patterns).
+ */
+function safeRegex(value) {
+  const escaped = String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(escaped, "i");
+}
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -75,6 +86,20 @@ const controllers = {
       const updateData = req.body;
       delete updateData.userId; // Remove userId from update data, it's for filtering
 
+      // 🔒 Hash a new password before saving; ignore empty/unchanged values
+      if (updateData.password) {
+        if (passwordHelper.isHashed(updateData.password)) {
+          // already a hash (shouldn't normally happen) — leave as-is
+        } else {
+          updateData.password = await passwordHelper.hashPassword(
+            updateData.password,
+          );
+        }
+      } else {
+        // never overwrite the stored password with an empty value
+        delete updateData.password;
+      }
+
       // Pass the updateData to the service function
       const data = await profileService.updateProfile(
         updateData,
@@ -118,32 +143,24 @@ const controllers = {
         req.body;
       const arrayOfFilters = [];
       if (preference) {
-        arrayOfFilters.push({
-          preference: { $regex: new RegExp(preference, "i") },
-        });
+        arrayOfFilters.push({ preference: { $regex: safeRegex(preference) } });
       }
       if (educationBoard) {
         arrayOfFilters.push({
-          educationBoard: { $regex: new RegExp(educationBoard, "i") },
+          educationBoard: { $regex: safeRegex(educationBoard) },
         });
       }
       if (location) {
-        arrayOfFilters.push({
-          location: { $regex: new RegExp(location, "i") },
-        });
+        arrayOfFilters.push({ location: { $regex: safeRegex(location) } });
       }
       if (expectedCtc) {
-        arrayOfFilters.push({
-          expectedCtc: { $regex: new RegExp(expectedCtc, "i") },
-        });
+        arrayOfFilters.push({ expectedCtc: { $regex: safeRegex(expectedCtc) } });
       }
       if (age) {
-        arrayOfFilters.push({ age: { $regex: new RegExp(age, "i") } });
+        arrayOfFilters.push({ age: { $regex: safeRegex(age) } });
       }
       if (userType) {
-        arrayOfFilters.push({
-          userType: { $regex: new RegExp(userType, "i") },
-        });
+        arrayOfFilters.push({ userType: { $regex: safeRegex(userType) } });
       }
       let find = {};
       if (arrayOfFilters && arrayOfFilters.length) {
