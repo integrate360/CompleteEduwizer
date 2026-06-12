@@ -8,8 +8,22 @@ const checkAuthorizationKey = require("../config/jwt.config");
 // ===================validator=====================
 const adminPanelValidator = require("../validator/adminPanel.validator");
 const advertisingController = require("../controller/advertising");
+const seoController = require("../controller/seo");
 
 module.exports = function (app) {
+  // ==============================SEO=========================
+  // Public reads (frontend consumes overrides; crawlers fetch the sitemap)
+  app.route("/sitemap.xml").get(seoController.getSitemap);
+  app.route("/admin/eduwizer/seo").get(seoController.getAllSeo);
+  app.route("/admin/eduwizer/seo/:pageKey").get(seoController.getSeo);
+  // Admin writes (auth-gated)
+  app
+    .route("/admin/eduwizer/seo")
+    .post(checkAuthorizationKey.checkToken, seoController.upsertSeo);
+  app
+    .route("/admin/eduwizer/seo/:pageKey")
+    .delete(checkAuthorizationKey.checkToken, seoController.deleteSeo);
+
   // ==============================blogs=========================
   app.route("/admin/eduwizer/getBlogs").get(
     // checkAuthorizationKey.checkToken,
