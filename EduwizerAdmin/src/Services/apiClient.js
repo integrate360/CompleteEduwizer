@@ -1,9 +1,9 @@
 import axios from "axios";
 
+// Backend base URL. Defaults to production; override locally with a .env file:
+//   VITE_API_URL=http://localhost:8081
 const apiClient = axios.create({
-  // baseURL: "https://eduwizerbackend.onrender.com/",
-  baseURL: "https://eduwizer.com/api",
-  // baseURL: "http://localhost:8081/",
+  baseURL: import.meta.env.VITE_API_URL || "https://eduwizer.com/api",
 });
 
 const requestHandler = (request) => {
