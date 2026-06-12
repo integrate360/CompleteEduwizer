@@ -1,0 +1,58 @@
+# ============================================================
+# NG Eduwizer frontend — nginx config for EC2
+#
+# The frontend is a client-side SPA using BrowserRouter (clean URLs like
+# /about-us). nginx must serve index.html for any unknown path so deep links
+# and refreshes work (the `try_files ... /index.html` line is the key part).
+#
+# Build the app first:   cd frontend && npm run build   (outputs ./dist)
+# Then point `root` at that dist folder on the server.
+# ============================================================
+
+server {
+    listen 80;
+    server_name eduwizer.com www.eduwizer.com;
+
+    # Path to the built frontend on the server
+    root /var/www/eduwizer/dist;
+    index index.html;
+
+    # ---- SPA history fallback (makes /about-us, /events-blogs, etc. work) ----
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # ---- Backend API (Express on :8081) reverse-proxied under /api ----
+    # If your frontend uses VITE_API_URL=https://eduwizer.com/api this keeps
+    # the API same-origin (also enables future httpOnly-cookie auth).
+    location /api/ {
+        proxy_pass http://127.0.0.1:8081/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # ---- SEO files served as-is ----
+    location = /robots.txt  { try_files $uri =404; }
+    location = /sitemap.xml { try_files $uri =404; }
+
+    # ---- Cache static assets aggressively (hashed filenames) ----
+    location /assets/ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # gzip
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml;
+    gzip_min_length 1024;
+}
+
+# ------------------------------------------------------------
+# For HTTPS (recommended — and required if you later move auth to
+# httpOnly cookies): run certbot to add a 443 server block, e.g.
+#   sudo certbot --nginx -d eduwizer.com -d www.eduwizer.com
+# certbot will inject the listen 443 / ssl_certificate lines automatically.
+# ------------------------------------------------------------

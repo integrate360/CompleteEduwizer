@@ -1,5 +1,5 @@
 import './App.css'
-import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import SiteHeader from './components/SiteHeader'
 import { MarketingFooter } from './components/SiteFooter'
@@ -43,7 +43,7 @@ function MarketingLayout({ children }: { children: React.ReactNode }) {
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <AuthProvider>
         <ScrollManager />
         <Routes>
@@ -127,7 +127,7 @@ function App() {
           <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </AuthProvider>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 
