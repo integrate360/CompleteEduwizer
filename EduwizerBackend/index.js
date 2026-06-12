@@ -12,7 +12,12 @@ const DEFAULT_ORIGINS = [
   "https://www.eduwizer.com",
   "https://ngeduwizer.com",
   "https://www.ngeduwizer.com",
+  // local dev: public site (Vite 5173), admin (Vite 5174), Vite preview (4173),
+  // CRA (3000) and the legacy frontend (4000)
   "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175",
+  "http://localhost:4173",
   "http://localhost:4000",
   "http://localhost:3000",
 ];
