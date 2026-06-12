@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowRightIcon, ChatIcon, ClockIcon, MailIcon, PhoneIcon, PinIcon, SendIcon, UserIcon } from '../components/icons'
 import { contactUs } from '../services/api'
+import Seo from '../components/Seo'
 
 const ADDRESS =
   'Enam Sambhav, C-20, G Block Rd, G Block BKC, Bandra Kurla Complex, Bandra East, Mumbai, Maharashtra 400051'
@@ -58,6 +59,16 @@ export default function ContactPage() {
 
   return (
     <main className="contact-page">
+      <Seo
+        title="Contact Us"
+        description="Get in touch with NG Eduwizer. Visit our Bandra Kurla Complex office in Mumbai, call +91 91677 80061, or send us a message — we reply within 24 hours."
+        path="/contact-us"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'ContactPage',
+          name: 'Contact NG Eduwizer',
+        }}
+      />
       <div className="page-wrap contact-grid">
         <section className="panel-message">
           <img className="panel-message__plane" src="/assets/figma/contact-plane.png" alt="" />

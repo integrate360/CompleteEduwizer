@@ -3,6 +3,14 @@ import { Link, useParams } from 'react-router-dom'
 import DOMPurify from 'dompurify'
 import { ArrowRightIcon, ClockIcon } from '../components/icons'
 import { getBlogById, getEventById, type BlogItem } from '../services/api'
+import Seo, { SITE_NAME } from '../components/Seo'
+
+/** Trim HTML/markup to a plain-text meta description (~160 chars). */
+const toMetaDescription = (text = '', fallback = '') => {
+  const clean = text.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+  if (!clean) return fallback
+  return clean.length > 160 ? `${clean.slice(0, 157)}…` : clean
+}
 
 const fmtDate = (ts?: string) =>
   ts
@@ -45,8 +53,43 @@ export default function DetailPage({ kind }: { kind: 'event' | 'blog' }) {
     )
   }
 
+  const metaDescription = toMetaDescription(
+    item.description || item.data,
+    `${item.title} — ${kind === 'event' ? 'event' : 'article'} from ${SITE_NAME}.`,
+  )
+  const seoPath = `/${kind === 'event' ? 'events-details' : 'blogs-details'}/${id}`
+  const jsonLd =
+    kind === 'blog'
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: item.title,
+          description: metaDescription,
+          image: item.image,
+          author: item.author ? { '@type': 'Person', name: item.author } : undefined,
+          datePublished: item.createdTimestamp,
+          publisher: { '@type': 'Organization', name: SITE_NAME },
+        }
+      : {
+          '@context': 'https://schema.org',
+          '@type': 'Event',
+          name: item.title,
+          description: metaDescription,
+          image: item.image,
+          startDate: item.createdTimestamp,
+          organizer: { '@type': 'Organization', name: SITE_NAME },
+        }
+
   return (
     <main className="detail-page">
+      <Seo
+        title={item.title}
+        description={metaDescription}
+        path={seoPath}
+        type="article"
+        image={item.image || undefined}
+        jsonLd={jsonLd}
+      />
       <div className="page-wrap detail-article">
         <span className="eyebrow">{kind === 'event' ? 'Event' : 'Blog'}</span>
         <h1 className="detail-title">{item.title}</h1>

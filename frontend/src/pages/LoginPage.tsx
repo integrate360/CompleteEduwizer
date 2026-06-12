@@ -4,6 +4,7 @@ import { ArrowRightIcon, EyeIcon, LockIcon, MailIcon } from '../components/icons
 import AuthDecor from '../components/AuthDecor'
 import { login } from '../services/api'
 import { useAuth } from '../auth/AuthContext'
+import Seo from '../components/Seo'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -38,6 +39,7 @@ export default function LoginPage() {
 
   return (
     <main className="auth-stage">
+      <Seo title="Login" description="Log in to your NG Eduwizer account." path="/login" noIndex />
       <AuthDecor />
       <img className="auth-stage__plane" src="/assets/figma/contact-plane.png" alt="" />
       <div className="page-wrap">

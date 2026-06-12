@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRightIcon, ClockIcon, PinIcon, VideoIcon } from '../components/icons'
 import { getBlogs, getEvents, type BlogItem, type EventItem } from '../services/api'
+import Seo from '../components/Seo'
 
 const fmtDate = (ts?: string) =>
   ts
@@ -84,6 +85,11 @@ export default function EventsPage() {
 
   return (
     <main>
+      <Seo
+        title="Events & Blogs"
+        description="Stay updated with the latest education events, industry insights and expert articles from NG Eduwizer — workshops, seminars, expos and leadership blogs for educators."
+        path="/events-blogs"
+      />
       <section className="hero">
         <div className="page-wrap hero__inner">
           <div>

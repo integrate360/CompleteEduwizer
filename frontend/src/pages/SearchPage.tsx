@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowRightIcon, PinIcon, StarIcon } from '../components/icons'
 import { searchProfiles, type Profile } from '../services/api'
+import Seo from '../components/Seo'
 
 const TITLES: Record<string, string> = {
   vendor: 'Infrastructure & Services',
@@ -64,6 +65,7 @@ export default function SearchPage({ userType }: { userType: string }) {
 
   return (
     <main className="search-page">
+      <Seo title={title} description={`Search ${title} on NG Eduwizer.`} noIndex />
       <section className="search-hero">
         <div className="page-wrap">
           <h1 className="section-heading section-heading--left">

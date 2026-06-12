@@ -1,7 +1,10 @@
 /** Terms & Conditions — content ported verbatim from the legacy site. */
+import Seo from '../components/Seo'
+
 export default function TermsPage() {
   return (
     <div className="page-wrap terms-page">
+      <Seo title="Terms & Conditions" description="Terms and conditions and privacy policy for using the NG Eduwizer educator portal." path="/terms-conditions" />
       <div className="terms-h1">Terms & Conditions</div>
       <div>
         The User of the Educator’s Portal / website (hereinafter referred to as

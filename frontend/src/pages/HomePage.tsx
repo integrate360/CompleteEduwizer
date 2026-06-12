@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type RefObject } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRightIcon, LinkedInIcon } from '../components/icons'
+import Seo, { SITE_NAME, SITE_URL } from '../components/Seo'
 import {
   getAboutChancellors,
   getAwardsAndRecognitions,
@@ -89,6 +90,21 @@ export default function HomePage() {
 
   return (
     <main>
+      <Seo
+        title="The First Comprehensive Educator's Database Portal"
+        description="NG Eduwizer connects talented educators with leading institutions worldwide — recruitment, career counselling, school infrastructure services and education insights across India, Dubai, Canada, Singapore & Europe."
+        path="/home"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Organization',
+          name: SITE_NAME,
+          url: SITE_URL,
+          logo: `${SITE_URL}/assets/logo-full.png`,
+          description:
+            'A comprehensive educator database portal for recruitment, counselling and school infrastructure services.',
+          areaServed: ['India', 'Dubai', 'Canada', 'Singapore', 'Europe'],
+        }}
+      />
       <section className="hero">
         <div className="page-wrap hero__inner">
           <div>

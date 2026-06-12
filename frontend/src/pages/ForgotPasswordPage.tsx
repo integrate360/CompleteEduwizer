@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowRightIcon, EyeIcon, LockIcon, MailIcon } from '../components/icons'
 import AuthDecor from '../components/AuthDecor'
 import { forgotPassword, setNewPassword } from '../services/api'
+import Seo from '../components/Seo'
 
 /** Step 1 — request a reset link by email. */
 export function ForgotPasswordPage() {
@@ -29,6 +30,7 @@ export function ForgotPasswordPage() {
 
   return (
     <main className="auth-stage">
+      <Seo title="Forgot Password" description="Reset your NG Eduwizer account password." path="/forgot-password" noIndex />
       <AuthDecor />
       <img className="auth-stage__plane" src="/assets/figma/contact-plane.png" alt="" />
       <div className="page-wrap">
@@ -108,6 +110,7 @@ export function SetNewPasswordPage() {
 
   return (
     <main className="auth-stage">
+      <Seo title="Set New Password" description="Choose a new password for your NG Eduwizer account." path="/setNewPassword" noIndex />
       <AuthDecor />
       <img className="auth-stage__plane" src="/assets/figma/contact-plane.png" alt="" />
       <div className="page-wrap">

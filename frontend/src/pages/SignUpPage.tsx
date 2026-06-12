@@ -14,6 +14,7 @@ import {
 } from '../components/icons'
 import AuthDecor from '../components/AuthDecor'
 import { sendOtp, signup, uploadFile, verifyOtp } from '../services/api'
+import Seo from '../components/Seo'
 
 /* Backend expects numbers for age/experience — labels stay as designed. */
 const ageOptions = [
@@ -293,6 +294,11 @@ export default function SignUpPage() {
   /* ---------- sign-up form ---------- */
   return (
     <main className="auth-stage">
+      <Seo
+        title="Create Your Account"
+        description="Sign up with NG Eduwizer as a candidate, counsellor, vendor or recruiter and connect with leading education institutions worldwide."
+        path="/register/candidate"
+      />
       <AuthDecor />
       <img className="auth-stage__plane" src="/assets/figma/contact-plane.png" alt="" />
       <div className="page-wrap">

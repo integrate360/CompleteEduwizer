@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Seo from '../components/Seo'
 
 const registerCells = [
   { value: '540000+ Candidates', type: 'candidate' },
@@ -10,6 +11,11 @@ const registerCells = [
 export default function AboutPage() {
   return (
     <main>
+      <Seo
+        title="About Us"
+        description="NG Eduwizer Pvt Ltd is a Mumbai-based multinational education recruitment company spanning India, Dubai, Canada, Singapore and Europe. Meet our leadership, brand ambassadors and CEO Dr. Nikkie Grover."
+        path="/about-us"
+      />
       <section className="about-hero">
         <div className="page-wrap about-hero__inner">
           <figure className="figure-tag">
