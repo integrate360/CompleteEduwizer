@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthContext'
 
 const INFRA_LINKS = [
@@ -28,6 +28,7 @@ const SIGNUP_LINKS = [
   { to: '/register/institute', label: 'Recruiter' },
 ]
 
+/* ---------- desktop dropdown ---------- */
 function Dropdown({
   label,
   items,
@@ -73,62 +74,94 @@ function Dropdown({
   )
 }
 
-const navItems = [
-  { label: 'Home', to: '/home' },
-  { label: 'Events & Blogs', to: '/events-blogs' },
-  { label: 'Contact Us', to: '/contact-us' },
-  { label: 'About Us', to: '/about-us' },
-]
+/* ---------- mobile collapsible group ---------- */
+function MobileGroup({
+  label,
+  items,
+  onNavigate,
+}: {
+  label: string
+  items: { to: string; label: string }[]
+  onNavigate: () => void
+}) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="mnav__group">
+      <button
+        type="button"
+        className="mnav__link mnav__group-toggle"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+      >
+        {label} <span className={`hdd__caret${open ? ' open' : ''}`} aria-hidden />
+      </button>
+      {open && (
+        <div className="mnav__sub">
+          {items.map((item) => (
+            <Link key={item.to} to={item.to} className="mnav__sublink" onClick={onNavigate}>
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function SiteHeader() {
   const { isLoggedIn, logout } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  // Close the drawer on route change and lock body scroll while it's open.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- close menu on navigation
+    setMenuOpen(false)
+  }, [location.pathname])
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
+  const close = () => setMenuOpen(false)
 
   return (
     <header className="topbar">
       <div className="page-wrap topbar__inner">
-        <Link to="/home" className="brand" aria-label="NG Eduwizer home">
+        <Link to="/home" className="brand" aria-label="NG Eduwizer home" onClick={close}>
           <img src="/assets/logo-full.png" alt="NG Eduwizer — India, Dubai, Canada, Singapore, Europe" />
         </Link>
+
+        {/* ---- desktop nav ---- */}
         <nav className="topnav" aria-label="Primary">
-          <NavLink
-            to="/home"
-            className={({ isActive }) => `topnav__link${isActive ? ' is-active' : ''}`}
-          >
+          <NavLink to="/home" className={({ isActive }) => `topnav__link${isActive ? ' is-active' : ''}`}>
             Home
           </NavLink>
           <Dropdown label="Infrastructure" items={INFRA_LINKS} />
           <Dropdown label="Counsellors" items={COUNSELLOR_LINKS} />
-          {navItems.slice(1).map((item) => (
-            <NavLink
-              key={item.label}
-              to={item.to}
-              className={({ isActive }) => `topnav__link${isActive ? ' is-active' : ''}`}
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          <NavLink to="/events-blogs" className={({ isActive }) => `topnav__link${isActive ? ' is-active' : ''}`}>
+            Events &amp; Blogs
+          </NavLink>
+          <NavLink to="/contact-us" className={({ isActive }) => `topnav__link${isActive ? ' is-active' : ''}`}>
+            Contact Us
+          </NavLink>
+          <NavLink to="/about-us" className={({ isActive }) => `topnav__link${isActive ? ' is-active' : ''}`}>
+            About Us
+          </NavLink>
         </nav>
+
+        {/* ---- desktop actions ---- */}
         <div className="topbar__actions">
-          <a
-            href="https://ngeduwizer.com"
-            target="_blank"
-            rel="noreferrer"
-            className="btn topbar__setup"
-          >
+          <a href="https://ngeduwizer.com" target="_blank" rel="noreferrer" className="btn topbar__setup">
             Setup Of School
           </a>
           {isLoggedIn ? (
             <>
               <Link to="/dashboard" className="btn topbar__signup">My Profile</Link>
-              <button
-                type="button"
-                className="btn topbar__login"
-                onClick={() => {
-                  logout()
-                  navigate('/home')
-                }}
-              >
+              <button type="button" className="btn topbar__login" onClick={() => { logout(); navigate('/home') }}>
                 Logout
               </button>
             </>
@@ -139,7 +172,48 @@ export default function SiteHeader() {
             </>
           )}
         </div>
+
+        {/* ---- hamburger (mobile/tablet) ---- */}
+        <button
+          type="button"
+          className={`hamburger${menuOpen ? ' is-open' : ''}`}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <span /><span /><span />
+        </button>
       </div>
+
+      {/* ---- mobile drawer ---- */}
+      {menuOpen && <div className="mnav__backdrop" onClick={close} />}
+      <nav className={`mnav${menuOpen ? ' is-open' : ''}`} aria-label="Mobile">
+        <NavLink to="/home" className="mnav__link" onClick={close}>Home</NavLink>
+        <MobileGroup label="Infrastructure" items={INFRA_LINKS} onNavigate={close} />
+        <MobileGroup label="Counsellors" items={COUNSELLOR_LINKS} onNavigate={close} />
+        <NavLink to="/events-blogs" className="mnav__link" onClick={close}>Events &amp; Blogs</NavLink>
+        <NavLink to="/contact-us" className="mnav__link" onClick={close}>Contact Us</NavLink>
+        <NavLink to="/about-us" className="mnav__link" onClick={close}>About Us</NavLink>
+
+        <div className="mnav__actions">
+          <a href="https://ngeduwizer.com" target="_blank" rel="noreferrer" className="btn topbar__setup" onClick={close}>
+            Setup Of School
+          </a>
+          {isLoggedIn ? (
+            <>
+              <Link to="/dashboard" className="btn topbar__signup" onClick={close}>My Profile</Link>
+              <button type="button" className="btn topbar__login" onClick={() => { close(); logout(); navigate('/home') }}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <MobileGroup label="Sign Up" items={SIGNUP_LINKS} onNavigate={close} />
+              <Link to="/login" className="btn topbar__login" onClick={close}>Login</Link>
+            </>
+          )}
+        </div>
+      </nav>
     </header>
   )
 }
