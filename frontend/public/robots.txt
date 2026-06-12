@@ -1,0 +1,14 @@
+# NG Eduwizer — robots
+User-agent: *
+Allow: /
+
+# Keep private/auth/utility pages out of the index
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /setNewPassword
+Disallow: /dashboard
+Disallow: /infrastructure-search
+Disallow: /career-counselling
+Disallow: /candidate
+
+Sitemap: https://eduwizer.com/sitemap.xml
