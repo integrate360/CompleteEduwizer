@@ -1,0 +1,54 @@
+.candidates {
+  display: flex;
+  height: auto; /* Adjust to fit content */
+  background-color: var(--color-goldenrod);
+  padding: 1rem; /* Optional padding for better spacing */
+}
+
+.candidates .candidate-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Default layout: 4 columns */
+  gap: 1rem; 
+  width: 100%;
+  height: auto;
+}
+
+.candidates .candidate-container .candidate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  justify-content: space-evenly;
+  background-color: #f2d055 !important; 
+  border-right: 1px solid var(--color-black);
+}
+
+.candidates .candidate-container .candidate:last-child {
+  border-right: none; /* Remove border for the last candidate */
+}
+
+.candidates .candidate-container .candidate .m-btn {
+  font-size: 1.25rem;
+  margin-top: auto;
+  padding: 0.5rem 1rem;
+}
+
+.candidates .candidate-container .candidate-count {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .candidates {
+    margin-top: 2rem;
+  }
+  .candidates .candidate-container {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1rem;
+  }
+
+  .candidates .candidate-container .candidate:nth-child(2n) {
+    border-right: none; /* Remove border for every second item in mobile layout */
+  }
+}

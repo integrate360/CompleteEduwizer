@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", sans-serif;
+  --font-serif: "Poppins", sans-serif;
+  --color-brand-gold: #f2d055;
+  --color-brand-navy: #14223d;
+  --color-brand-purple: #280b2f;
+  --color-btn-gold: #f2d055;
+  --color-btn-gold-hover: #dfbe3e;
+  --color-panel-bg: #ffffff;
+  --color-sidebar-bg: #14223d;
+  --color-app-bg: #ffffff;
+  --background-image-brand-gradient: linear-gradient(136.64deg, #14223d, #280b2f);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #ffffff;
+  color: #0f172a;
+  min-height: 100vh;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Contenteditable Placeholder Style */
+[contenteditable]:empty:before {
+  content: attr(placeholder);
+  color: #94a3b8;
+  cursor: text;
+}
+
+/* Ensure rich list elements are styled properly in visual editor */
+[contenteditable] ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+[contenteditable] ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+[contenteditable] li {
+  display: list-item !important;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
+}
+

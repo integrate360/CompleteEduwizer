@@ -1,0 +1,96 @@
+@import '../node_modules/react-toastify/scss/main.scss';
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.dropdown-toggle::after {
+  display: none !important; 
+}
+
+
+.dropdown-menu {
+  min-width: 0;
+}
+
+.mr-2 {
+ margin-right: 2rem !important; 
+}
+
+.MuiFormControlLabel-label {
+  font-size: 12px;
+}
+
+.MuiInputBase-formControl {
+  border-radius: 20px !important;
+  background: #FBFBFB !important;
+}
+
+#outlined-adornment-address {
+  border-radius: 20px !important;
+  background: #FBFBFB !important;
+}
+
+.pos-viv {
+  position: absolute;
+  transform: translate(14px, -9px) scale(0.55);
+  background: white;
+  z-index: 1;
+  top: 20px;
+  right: 1%
+}
+
+.warning-bg {
+  background-color: #ffc107 !important;
+}
+
+
+.Mui-checked {
+
+  .MuiSwitch-thumb {
+    background: #F2D055 !important;
+  }
+  
+}
+.MuiSwitch-track {
+  background: #FFF2C3 !important;
+}
+
+
+.border-custom {
+  border: 3px solid #000000;
+box-shadow: 0px 12px 0px #000000;
+border-radius: 20px;
+}
+
+.grey-bg {
+  background: #FBFBFB;
+}
+
+.border-radius-custom {
+  border-radius: 18px;
+}
+
+.upload-cv {
+  border: 1px solid #000;
+  border-bottom: 6px solid #000
+}
+
+.upload-cv:hover {
+  border: 1px solid #000;
+  border-bottom: 6px solid #000
+}
+
+.shadow-on-btn {
+  border-bottom: 6px solid #000;
+}

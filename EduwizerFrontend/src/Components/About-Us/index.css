@@ -1,0 +1,311 @@
+.about-us {
+  font-family: var(--font-poppins);
+  font-size: var(--font-size-mini);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-midnightblue);
+  font-family: var(--font-poppins);
+  gap: 2rem;
+}
+
+section .section-head-mobile {
+  align-self: center;
+  font-size: 2rem !important;
+}
+
+section .section-content {
+  display: flex;
+  flex-direction: row;
+  /* gap: 1rem; */
+}
+
+section .section-content .image-container {
+  flex: 2;
+  display: flex;
+  align-items: center;
+}
+
+.img-cont-mobile {
+  margin: 0rem 0rem 1rem 0rem !important;
+}
+
+section .section-content .image-container .image-content {
+  position: relative;
+}
+
+section .section-content .image-container .image-content .image {
+  border-radius: 8pt;
+  overflow: hidden;
+  width: 100%;
+}
+
+section .section-content .image-container .image-content .image-detail {
+  color: var(--color-gray-200);
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 0.8rem;
+}
+
+section .section-content .text-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 3rem;
+}
+
+section .section-foot {
+  margin-top: 1rem;
+}
+
+.learn-more .image-container {
+  margin: 1rem 3rem 1rem 1rem;
+}
+
+.learn-more .text-container h1 {
+  font-size: 3rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.learn-more .text-container p {
+  font-size: 1.5rem;
+}
+
+.learn-more .text-container .m-btn {
+  font-size: 1.5rem;
+  margin: auto 0 0;
+  max-width: 60%;
+  padding: 1rem 2rem;
+}
+
+.about-us-actor {
+  margin-top: -6rem;
+}
+
+.about-us-actor .section-content .image-container {
+  flex: 1;
+}
+
+.about-us-actor .section-content .image-container .image-detail {
+  left: 1rem;
+}
+
+.about-us-actor .section-content .text-container {
+  flex: 1.25;
+  font-size: 0.8rem;
+}
+
+.about-us-actor .section-content .text-container p {
+  font-size: 16px;
+}
+
+.about-us-ceo {
+  margin-top: -6rem;
+}
+
+.about-us-ceo .section-content {
+  gap: 3rem;
+}
+
+.about-us-ceo .section-content .image-container {
+  flex: 1;
+}
+
+.about-us-ceo .section-content .image-container .image-detail {
+  left: 1rem;
+}
+
+.about-us-ceo .section-content .text-container {
+  flex: 1.25;
+  font-size: 16px;
+  gap: 0;
+  padding: 0;
+}
+
+.about-us-ceo .section-foot {
+  font-size: 16px;
+  margin-top: -1rem;
+}
+
+.want-to {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.want-to h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+
+.want-to p {
+  font-size: 1.5rem;
+}
+
+.want-to .btn-group {
+  display: flex;
+  flex-direction: row;
+  gap: 6rem;
+  width: 100%;
+  margin-top: 0rem;
+}
+
+.want-to .btn-group .m-btn {
+  flex: 1;
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+
+.m-btn .btn-group {
+  margin-top: 0rem;
+}
+
+.want-text {
+  font-size: 1.8rem;
+  font-weight: lighter;
+  text-align: center;
+}
+
+.package {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.package h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.package .packs {
+  display: flex;
+  flex-direction: row;
+  gap: 6rem;
+  position: relative;
+  width: 90%;
+  margin: auto;
+}
+
+.package .packs .pack-bg {
+  left: -15%;
+  position: absolute;
+  top: -50%;
+}
+
+.package .packs .pack {
+  align-items: flex-start;
+  background-color: white;
+  border: 0.2rem solid black;
+  border-radius: 9pt;
+  box-shadow: 0 1rem black;
+  display: flex;
+  flex: 0.8;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  z-index: 1;
+}
+
+.package .packs .pack-name {
+  font-size: 2rem;
+}
+
+.package .packs .pack-sub {
+  font-size: 1rem;
+}
+
+.package .packs .pack-per-user {
+  font-size: 1rem;
+}
+
+.package .packs .pack-price {
+  display: flex;
+  font-size: 2rem;
+  gap: 1rem;
+}
+
+.package .packs .pack-price-original {
+  text-decoration: line-through;
+}
+
+.package .m-btn {
+  font-size: 2rem;
+  margin: auto;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  width: 50%;
+}
+
+.m-btn .btn-text {
+  padding: 0.25rem 2rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .m-btn .btn-text {
+    padding: 0.25rem 2rem;
+    font-size: 20px;
+  }
+}
+
+.mobile-h1 {
+  font-size: 2rem !important;
+  text-align: center !important;
+}
+
+/* Add this in your CSS */
+@media (max-width: 767px) {
+  .nowrap {
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+    text-align: center;
+    /* Center text */
+  }
+
+  .about-us-actor .section-content {
+    flex-direction: column-reverse;
+  }
+}
+
+@media (min-width: 1500px) and (max-width: 1700px) {
+  .about-us-actor .section-content .text-container p {
+    font-size: 18px;
+  }
+
+  .about-us-ceo .section-content .text-container {
+    flex: 1.25;
+    font-size: 18px;
+    gap: 0;
+    padding: 0;
+  }
+
+  .about-us-ceo .section-foot {
+    font-size: 18px;
+    margin-top: -1rem;
+  }
+}
+
+@media (min-width:1700px) {
+  .about-us-actor .section-content .text-container p {
+    font-size: 20px;
+  }
+
+  .about-us-ceo .section-content .text-container {
+    flex: 1.25;
+    font-size: 20px;
+    gap: 0;
+    padding: 0;
+  }
+
+  .about-us-ceo .section-foot {
+    font-size: 20px;
+    margin-top: -1rem;
+  }
+}

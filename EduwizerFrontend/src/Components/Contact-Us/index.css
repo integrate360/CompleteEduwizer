@@ -1,0 +1,146 @@
+.opener {
+  /* background-image: url("../../../public/assets/images/png/contact-us.png"); */
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .opener {
+    /* background-image: url("../../../public/assets/images/png/contact-us.png"); */
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    justify-content: center;
+  }
+}
+
+.opener-content {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  gap: 1.5rem;
+  transform: scale(1.1) translate(10%);
+}
+.opener-content h1 {
+  margin: 0;
+}
+.opener-content .m-btn {
+  margin-top: 2rem;
+  width: 50%;
+}
+
+.opener-content-head {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.other-ways {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.other-ways-head {
+  font-weight: bold;
+}
+
+.other-ways-content {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.other-ways-content .other-way {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center !important;
+  justify-content: center;
+}
+.other-ways-content .other-way .icon {
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.other-ways-content .other-way .text {
+  display: flex;
+  align-items: center;
+}
+
+.follow-us {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.follow-us-head {
+  font-weight: 100;
+}
+
+.follow-us-content {
+  display: flex;
+  gap: 6rem;
+}
+.follow-us-content .other-way {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.follow-us-content .icon {
+  height: 4rem;
+  width: 4rem;
+}
+
+.message-us {
+  background-image: url("../../../public/assets/images/svg/message-us-yellow-bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  /* height: 100vh; */
+  justify-content: center;
+}
+
+.message-us-container {
+  width: 70%;
+  height: 90%;
+  border: 4px solid black;
+  background-color: white;
+  /* padding: 2rem; */
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+  /* gap: 3rem; */
+}
+.message-us-container .message-head {
+  /* display: flex; */
+  width: 100%;
+  padding: 1rem;
+  gap: 1rem;
+  /* flex-direction: column; */
+}
+.message-us-container .message-head div {
+  flex: 1;
+}
+.message-us-container .message {
+  flex: 1;
+  margin: 0 1rem;
+}
+.message-us-container .message .m-input {
+  height: -webkit-fill-available;
+}
+.message-us-container .m-btn {
+  margin: 1rem auto 3rem;
+  padding: 0.5rem;
+  width: 35%;
+}

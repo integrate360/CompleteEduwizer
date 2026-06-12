@@ -1,0 +1,60 @@
+.title {
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 120%;
+/* identical to box height, or 24px */
+
+
+color: #1C115D;
+}
+
+.sponsored {
+    background: #F2D055;
+border-radius: 5px 0px 0px 5px;
+font-family: 'Plus Jakarta Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 20px;
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #000000;
+}
+
+.desc {
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 15px;
+line-height: 180%;
+/* identical to box height, or 27px */
+
+
+color: #000000;
+
+}
+
+.tag {
+    background: #D9D9D9;
+border-radius: 5px;
+font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 6px;
+line-height: 180%;
+/* identical to box height, or 11px */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #888888;
+}
+
+.border-bottom {
+    border: 1px solid #000000;
+}
